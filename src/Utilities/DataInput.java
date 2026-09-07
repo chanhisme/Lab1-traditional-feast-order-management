@@ -4,8 +4,26 @@ import java.util.Scanner;
 
 public class DataInput {
     
-    
 
+    public static int getInteger(String message) throws Exception{
+        int number = 0;
+        System.out.println(message);
+        number = getInteger();
+        return number;
+    }
+
+    public static int getInteger() throws Exception{
+        int number = 0;
+        String strInput;
+        strInput = getString();
+        if(!DataValidation.checkStringWithFormat(strInput, "\\d{1,10}")){
+            throw new Exception("Data invalid.");
+        }
+        else{
+            number = Integer.parseInt(strInput);
+        }
+        return number;
+    }
     public static String getString(String displayMessage) {
         String strInput;
         System.out.print(displayMessage);
