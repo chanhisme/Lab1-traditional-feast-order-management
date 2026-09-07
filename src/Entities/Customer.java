@@ -31,7 +31,11 @@ public class Customer {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws Exception {
+        if (!DataValidation.checkStringWithFormat(name, "^[A-Za-z]{2,25}$")) {
+            throw new Exception(
+                    "Name must be from 2 to 25 characters");
+        }
         this.name = name;
     }
 
