@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package BusinessObject;
+import DataObjects.CustomerDAO;
 import Entities.Customer;
 import Utilities.DataInput;
 /**
@@ -10,7 +11,12 @@ import Utilities.DataInput;
  * @author chanh
  */
 public class CustomerManagment {
-        
+    private final CustomerDAO customerDAO;
+
+    public CustomerManagment(CustomerDAO customerDAO) {
+        this.customerDAO = customerDAO;
+    }
+
     public Customer inputCustomer()  throws Exception {
         String id = DataInput.getString("Enter customer id: ");
         String name = DataInput.getString("Enter customer name: ");
@@ -23,7 +29,11 @@ public class CustomerManagment {
     public void addNewCustomer(){
             try{
                 Customer customer = inputCustomer();
-
+                if(customerDAO.getCustomer(customer.getId()) != null){
+                    System.out.println("Customer already exists!");
+                    return;
+                }
+                customerDAO.addCustomer(customer);
                 
             }
             catch(Exception e){

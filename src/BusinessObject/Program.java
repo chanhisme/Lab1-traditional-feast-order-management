@@ -1,7 +1,12 @@
 package BusinessObject;
 
+import DataObjects.CustomerDAO;
+import Entities.Customer;
 import Utilities.Menu;
 import Utilities.DataInput;
+
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
@@ -9,6 +14,9 @@ import Utilities.DataInput;
  */
 public class Program {
     public static void main(String[] args) {
+        Map<String, Customer> customers = new TreeMap<>();
+        CustomerDAO customerDAO = new CustomerDAO(customers);
+        CustomerManagment customerManagment = new CustomerManagment(customerDAO);
         int choice;
         try {
 
@@ -22,7 +30,7 @@ public class Program {
                 choice = DataInput.getInteger("Enter your choice: ");
                 switch (choice) {
                     case 1:
-                        
+                        customerManagment.addNewCustomer();
                         break;
                 
                     default:
