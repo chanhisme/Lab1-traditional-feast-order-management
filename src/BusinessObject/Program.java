@@ -54,8 +54,6 @@ public class Program {
             System.out.println(e.getMessage());
         }
     }
-    public static void DisplayCustomerOrOrder() {
 
-    }
 
 }
