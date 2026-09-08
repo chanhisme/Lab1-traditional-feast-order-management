@@ -17,6 +17,10 @@ public class Program {
         Map<String, Customer> customers = new TreeMap<>();
         CustomerDAO customerDAO = new CustomerDAO(customers);
         CustomerManagment customerManagment = new CustomerManagment(customerDAO);
+        
+        
+        
+        customerDAO.load();
         int choice;
         try {
 
@@ -32,7 +36,9 @@ public class Program {
                     case 1:
                         customerManagment.addNewCustomer();
                         break;
-                
+                      
+                    case 8:
+                        customerManagment.displayAllCustomers(customerDAO.getAllCustomers());
                     default:
                         System.out.println("Good bye");
                         System.exit(0);
@@ -43,5 +49,9 @@ public class Program {
             System.out.println(e.getMessage());
         }
     }
-
+    
+    public static void DisplayCustomerOrOrder(){
+        
+    }
+    
 }

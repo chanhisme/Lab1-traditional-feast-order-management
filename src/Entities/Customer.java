@@ -5,13 +5,13 @@ import Utilities.DataValidation;
 public class Customer {
     private static final String PHONE_REGEX =
         "^(03[2-9]|05[2568]|07[06789]|08[1-9]|09[0-9])\\d{7}$";
-    private static final String NAME_CUSTOMER_REGEX = "^[A-Za-z]{2,25}$";
+    private static final String NAME_CUSTOMER_REGEX = "^(?=.{2,25}$)[A-Za-z]+(?: [A-Za-z]+)*$";
     private static final String EMAIL_REGEX =
         "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
     private String id;
     private String name;
     private String phone;
-    private String email;
+    private String email;   
 
     public Customer(String id, String name, String phone, String email) throws Exception {
         setId(id);
