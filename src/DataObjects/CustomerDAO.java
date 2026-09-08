@@ -35,11 +35,51 @@ public class CustomerDAO {
         return customers.get(id);
     }
 
-    public ArrayList <Customer> getAllCustomers() {
-        return new ArrayList<>(customers.values()) ;
+    public ArrayList<Customer> findCustomerByName(String targetName) {
+        ArrayList<Customer> result = new ArrayList<>();
+
+        String[] findName = targetName.split(" ");
+        for (Map.Entry<String, Customer> entry : customers.entrySet()) {
+            Customer customer = entry.getValue();
+
+            String[] nameWord = customer.getName().split(" ");
+            
+            if (findName.length > nameWord.length) {
+                continue;
+            }
+            
+            boolean isMatch = true;
+            
+            int j = nameWord.length - 1;
+            for (int i = findName.length - 1; i >= 0; i--) {
+                if (!findName[i].equalsIgnoreCase(nameWord[j])) {
+                    isMatch = false;
+                    break;
+                }
+                --j;
+            }
+            if (isMatch == true) {
+                result.add(customer);
+            }
+
+        }
+
+        return result;
     }
 
+    public ArrayList<Customer> getAllCustomers() {
+        return new ArrayList<>(customers.values());
+    }
 
+    public void updateCustomer(Customer customer) throws Exception {
+        Customer cus = findCustomer(customer.getName());
+        if (cus != null) {
+            cus.setName(customer.getName());
+            cus.setPhone(customer.getPhone());
+            cus.setEmail(customer.getEmail());
+
+        }
+    }
 
     public void load() {
         try ( BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
@@ -53,7 +93,7 @@ public class CustomerDAO {
                 String email = parts[3];
                 customers.put(id, new Customer(id, name, phone, email));
             }
-             System.out.println("ok");
+            System.out.println("ok");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

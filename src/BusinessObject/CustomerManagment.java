@@ -7,6 +7,7 @@ package BusinessObject;
 import DataObjects.CustomerDAO;
 import Entities.Customer;
 import Utilities.DataInput;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,6 +67,49 @@ public class CustomerManagment {
         System.out.println("----------------------------------------------------------------");
     }
 
+    public void updateCustomer() {
+        try {
+            String id = DataInput.getString("Enter customer id: ");
+            Customer customer = customerDAO.findCustomer(id);
+            if (customer == null) {
+                System.out.println(">>The customer not found.");
+                return;
+            }
+            setNewCustomer(customer);
+            System.out.println(">>The customer has updated successfully.");
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void setNewCustomer(Customer customer) throws Exception{
+        String name = DataInput.getString("Enter new name: ");
+        if (!name.isEmpty()) {
+            customer.setName(name);
+        }
+        
+        String phone = DataInput.getString("Enter new phone: ");
+        if(!phone.isEmpty()){
+            customer.setPhone(phone);
+        }
+        
+        String email = DataInput.getString("Enter new email");
+        if(!email.isEmpty()){
+            customer.setEmail(email);
+        }
+        
+    }
+    
+    public ArrayList <Customer> findCustomerByName(){
+        ArrayList <Customer> result = null;
+        String name = DataInput.getString("Enter customer name: ");
+        if(name != null){
+            result = customerDAO.findCustomerByName(name);
+        }
+        return result;
+    }
+    
     public String formatName(String name) {
         String[] parts = name.trim().split("\\s+");
 
