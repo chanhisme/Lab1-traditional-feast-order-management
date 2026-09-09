@@ -1,5 +1,5 @@
 package Entities;
 
-public class SetMenu{
+public class FeastMenu{
     
 }

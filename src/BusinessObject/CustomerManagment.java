@@ -46,6 +46,11 @@ public class CustomerManagment {
     }
 
     public void displayAllCustomers(List<Customer> customers) {
+        if(customers == null || customers.size() < 1){
+            System.out.println("No one matches the search criteria!");
+            return;
+        }
+        
         System.out.println("----------------------------------------------------------------");
         System.out.printf(
                 "%-5s | %-20s | %-10s | %-25s%n",
