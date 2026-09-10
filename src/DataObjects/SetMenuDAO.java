@@ -17,97 +17,65 @@ import java.util.Map;
  *
  * @author chanh
  */
-public class SetMenuDAO {
 
-    private final String PATH = "FeastMenu.txt";
-    private final Map<String, SetMenu> setMenuMap;
+    public class SetMenuDAO {
 
-    public SetMenuDAO(Map<String, SetMenu> setMenuMap) {
-        this.setMenuMap = setMenuMap;
-    }
+        private final String PATH = "FeastMenu.txt";
+        private final Map<String, SetMenu> setMenu;
 
-    public Map<String, SetMenu> getSetMenuMap() {
-        return setMenuMap;
-    }
-    
-    public void load() {
+        public SetMenuDAO(Map<String, SetMenu> setMenu) {
+            this.setMenu = setMenu;
+        }
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(PATH))){
-            String line;
-            String id = null;
-            String name = null;
-            double price = 0;
-            Map<String, List<String>> ingredients = null;
+        public void load() {
+            try ( BufferedReader reader = new BufferedReader(new FileReader(PATH))) {
+                String line;
+                reader.readLine();
 
-            while ((line = reader.readLine()) != null) {
-
-                line = line.trim();
-
-                if (line.isEmpty()) {
-                    continue;
-                }
-                if (line.startsWith("-------------------")) {
-                    if (id != null && ingredients != null) {
-                        SetMenu setMenu = new SetMenu(id, name, price, ingredients);
-                        setMenuMap.put(setMenu.getId(), setMenu);
+                while ((line = reader.readLine()) != null) {
+                    if (line.trim().isEmpty()) {
+                        continue;
                     }
-                    id = null;
-                    name = null;
-                    price = 0;
-                    ingredients = null;
-                    continue;
-                }
 
-                String[] parts = line.split("=", 2);
-                if (parts.length < 2) {
-                    continue;
-                }
-                String type = parts[0].trim();
-                String value = parts[1].trim();
+                    String[] data = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
 
-                if (ingredients == null) {
-                    ingredients = new LinkedHashMap<>();
-                }
+                    String id = data[0].trim();
+                    String name = data[1].trim();
+                    double price = Double.parseDouble(data[2].trim());
+                    String ingredientsData = data[3].trim();
 
-                switch (type) {
-                    case "id":
-                        id = value;
-                        break;
-                    case "Name":
-                        name = value;
-                        break;
-                    case "Price":
-                        try {
-                            price = Double.parseDouble(value);
-                        } catch (NumberFormatException e) {
-                            price = 0;
+                    if (ingredientsData.startsWith("\"") && ingredientsData.endsWith("\"")) {
+                        ingredientsData = ingredientsData.substring(1, ingredientsData.length() - 1);
+                    }
+
+                    Map<String, List<String>> ingredients = new LinkedHashMap<>();
+                    String[] categories = ingredientsData.split("#");
+
+                    for (String category : categories) {
+                        category = category.trim();
+
+                        if (category.startsWith("+ Khai vị:")) {
+                            String dishes = category.substring("+ Khai vị:".length()).trim();
+                            ingredients.put("Khai vị", Arrays.asList(dishes.split(";")));
+                        } else if (category.startsWith("+ Món chính:")) {
+                            String dishes = category.substring("+ Món chính:".length()).trim();
+                            ingredients.put("Món chính", Arrays.asList(dishes.split(";")));
+                        } else if (category.startsWith("+ Tráng miệng:")) {
+                            String dishes = category.substring("+ Tráng miệng:".length()).trim();
+                            ingredients.put("Tráng miệng", Arrays.asList(dishes.split(";")));
                         }
-                        break;
-                    case "Khai vị":
-                        ingredients.put("Khai vị", Arrays.asList(value.split(";\\s*")));
-                        break;
-                    case "Món chính":
-                        ingredients.put("Món chính", Arrays.asList(value.split(";\\s*")));
-                        break;
-                    case "Tráng miệng":
-                        ingredients.put("Tráng miệng", Arrays.asList(value.split(";\\s*")));
-                        break;
+                    }
+
+                    SetMenu menu = new SetMenu(id, name, price, ingredients);
+                    setMenu.put(id, menu);
                 }
+            } catch (IOException | NumberFormatException e) {
+                System.out.println(e.getMessage());
             }
+        }
 
-            if (id != null && ingredients != null) {
-                SetMenu setMenu = new SetMenu(id, name, price, ingredients);
-                setMenuMap.put(setMenu.getId(), setMenu);
-            }
+        public void save() {
 
-        } catch (IOException e) {
-            System.out.println("the “FeastMenu.txt” does not exist " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
     }
 
-    public void save() {
-
-    }
-}
