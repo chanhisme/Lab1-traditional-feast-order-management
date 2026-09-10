@@ -22,7 +22,7 @@ public class Program {
         
         Map <String, FeastMenu> feastMenus = new LinkedHashMap<>();
         FeastMenuDAO feastMenuDAO = new FeastMenuDAO(feastMenus);
-        
+        FeastMenuManagement feastMenuManagement = new FeastMenuManagement(feastMenuDAO);
         
         feastMenuDAO.load();
         customerDAO.load();
@@ -46,6 +46,9 @@ public class Program {
                         break;
                     case 3:
                         customerManagment.displayAllCustomers(customerManagment.findCustomerByName());
+                        break;
+                    case 4: 
+                        feastMenuManagement.displayFeastMenu(feastMenus);
                         break;
                     case 8:
                         customerManagment.displayAllCustomers(customerDAO.getAllCustomers());
