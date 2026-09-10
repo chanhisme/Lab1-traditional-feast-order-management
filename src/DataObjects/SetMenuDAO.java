@@ -1,6 +1,6 @@
 package DataObjects;
 
-import Entities.FeastMenu;
+import Entities.SetMenu;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,17 +17,17 @@ import java.util.Map;
  *
  * @author chanh
  */
-public class FeastMenuDAO {
+public class SetMenuDAO {
 
     private final String PATH = "FeastMenu.txt";
-    private final Map<String, FeastMenu> feastMap;
+    private final Map<String, SetMenu> setMenuMap;
 
-    public FeastMenuDAO(Map<String, FeastMenu> feastMap) {
-        this.feastMap = feastMap;
+    public SetMenuDAO(Map<String, SetMenu> setMenuMap) {
+        this.setMenuMap = setMenuMap;
     }
 
-    public Map<String, FeastMenu> getFeastMap() {
-        return feastMap;
+    public Map<String, SetMenu> getSetMenuMap() {
+        return setMenuMap;
     }
     
     public void load() {
@@ -48,8 +48,8 @@ public class FeastMenuDAO {
                 }
                 if (line.startsWith("-------------------")) {
                     if (id != null && ingredients != null) {
-                        FeastMenu feastMenu = new FeastMenu(id, name, price, ingredients);
-                        feastMap.put(feastMenu.getId(), feastMenu);
+                        SetMenu setMenu = new SetMenu(id, name, price, ingredients);
+                        setMenuMap.put(setMenu.getId(), setMenu);
                     }
                     id = null;
                     name = null;
@@ -96,12 +96,12 @@ public class FeastMenuDAO {
             }
 
             if (id != null && ingredients != null) {
-                FeastMenu feastMenu = new FeastMenu(id, name, price, ingredients);
-                feastMap.put(feastMenu.getId(), feastMenu);
+                SetMenu setMenu = new SetMenu(id, name, price, ingredients);
+                setMenuMap.put(setMenu.getId(), setMenu);
             }
 
         } catch (IOException e) {
-            System.out.println("the “feastMenu.csv” does not exist " + e.getMessage());
+            System.out.println("the “FeastMenu.txt” does not exist " + e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

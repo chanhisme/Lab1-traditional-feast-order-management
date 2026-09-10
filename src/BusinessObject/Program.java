@@ -7,8 +7,9 @@ import Utilities.DataInput;
 import java.util.LinkedHashMap;
 
 import java.util.Map;
-import Entities.FeastMenu;
-import DataObjects.FeastMenuDAO;
+import Entities.SetMenu;
+import DataObjects.SetMenuDAO;
+
 /**
  *
  * @author chanh
@@ -20,11 +21,11 @@ public class Program {
         CustomerDAO customerDAO = new CustomerDAO(customers);
         CustomerManagement customerManagment = new CustomerManagement(customerDAO);
         
-        Map <String, FeastMenu> feastMenus = new LinkedHashMap<>();
-        FeastMenuDAO feastMenuDAO = new FeastMenuDAO(feastMenus);
-        FeastMenuManagement feastMenuManagement = new FeastMenuManagement(feastMenuDAO);
+        Map<String, SetMenu> setMenus = new LinkedHashMap<>();
+        SetMenuDAO setMenuDAO = new SetMenuDAO(setMenus);
+        SetMenuManagement setMenuManagement = new SetMenuManagement(setMenuDAO);
         
-        feastMenuDAO.load();
+        setMenuDAO.load();
         customerDAO.load();
         int choice;
         try {
@@ -48,7 +49,7 @@ public class Program {
                         customerManagment.displayAllCustomers(customerManagment.findCustomerByName());
                         break;
                     case 4: 
-                        feastMenuManagement.displayFeastMenu(feastMenus);
+                        setMenuManagement.displaySetMenu(setMenus);
                         break;
                     case 8:
                         customerManagment.displayAllCustomers(customerDAO.getAllCustomers());
