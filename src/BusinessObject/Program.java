@@ -7,7 +7,8 @@ import Utilities.DataInput;
 import java.util.LinkedHashMap;
 
 import java.util.Map;
-
+import Entities.FeastMenu;
+import DataObjects.FeastMenuDAO;
 /**
  *
  * @author chanh
@@ -17,8 +18,13 @@ public class Program {
     public static void main(String[] args) {
         Map<String, Customer> customers = new LinkedHashMap<>();
         CustomerDAO customerDAO = new CustomerDAO(customers);
-        CustomerManagment customerManagment = new CustomerManagment(customerDAO);
-
+        CustomerManagement customerManagment = new CustomerManagement(customerDAO);
+        
+        Map <String, FeastMenu> feastMenus = new LinkedHashMap<>();
+        FeastMenuDAO feastMenuDAO = new FeastMenuDAO(feastMenus);
+        
+        
+        feastMenuDAO.load();
         customerDAO.load();
         int choice;
         try {

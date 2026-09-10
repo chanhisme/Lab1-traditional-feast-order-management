@@ -14,11 +14,11 @@ import java.util.List;
  *
  * @author chanh
  */
-public class CustomerManagment {
+public class CustomerManagement {
 
     private final CustomerDAO customerDAO;
 
-    public CustomerManagment(CustomerDAO customerDAO) {
+    public CustomerManagement(CustomerDAO customerDAO) {
         this.customerDAO = customerDAO;
     }
 

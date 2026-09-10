@@ -1,39 +1,39 @@
-[PW001]
+id=PW001
 Name=Wedding party 01
 Price=3750000
 Khai vị=Súp bong bóng cá; Nem rán; Gỏi hoa chuối tôm thịt
 Món chính=Gà luộc; Bò sốt vang; Lẩu hải sản nấm
 Tráng miệng=Bánh flan; trái cây
-
-[PW002]
+-----------------------------------------
+id=PW002
 Name=Company year end party
 Price=2085000
 Khai vị=Súp gà ngô; Nộm bò rau mầm
 Món chính=Tôm hấp bia; Bò sốt tiêu đen + bánh mì; Rau củ xào thập cẩm; Lẩu gà lá é
 Tráng miệng=Rau câu dừa
-
-[PW003]
+-----------------------------------------
+id=PW003
 Name=Birthday Party 01
 Price=1850000
 Khai vị=Gỏi bò Thái Lan; Súp cua nấm tuyết; Đồ nguội (chả giò + nem chua + chả lụa + chả đùm + chả quế)
 Món chính=Gà quay + xôi lá dứa; Bò né khổ qua; Lẩu thái
 Tráng miệng=Sâm bổ lượng
-
-[PW004]
+-----------------------------------------
+id=PW004
 Name=Wedding party 02
 Price=3550000
 Khai vị=Gỏi củ hủ dừa bao tử; Đồ nguội (chạo tôm bọc mía + tôm bọc cốm chiên + chả giò hải sản + chả mực giã tay)
 Món chính=Gà hấp hành; Mực xào chua ngọt; Cá chẽm sốt chua ngọt; Lẩu bò khoai môn
 Tráng miệng=Bánh bông lan flan
-
-[PW005]
+-----------------------------------------
+id=PW005
 Name=Birthday Party 02
 Price=2250000
 Khai vị=Salad sò điệp bơ; Súp kem bí đỏ; Mực chiên xù
 Món chính=Bò bít tết sốt vang; Gà nướng ngũ vị; Mì ý cua phô mai
 Tráng miệng=Mousse cam
-
-[PW006]
+-----------------------------------------
+id=PW006
 Name=Meeting Party
 Price=1950000
 Khai vị=Súp bào ngư nấm; Nem công + chả phụng; Gỏi bò ớt chuông

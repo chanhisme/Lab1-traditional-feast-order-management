@@ -20,20 +20,20 @@ import java.util.Map;
 public class FeastMenuDAO {
 
     private final String PATH = "FeastMenu.txt";
-    private final Map<String, List<String>> Ingredient;
     private final Map<String, FeastMenu> feastMap;
 
-    public FeastMenuDAO(Map<String, List<String>> Ingredient, Map<String, FeastMenu> feastMap) {
-        this.Ingredient = Ingredient;
+    public FeastMenuDAO(Map<String, FeastMenu> feastMap) {
         this.feastMap = feastMap;
     }
 
+    public Map<String, FeastMenu> getFeastMap() {
+        return feastMap;
+    }
+    
     public void load() {
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(PATH))) {
-
+        try (BufferedReader reader = new BufferedReader(new FileReader(PATH))){
             String line;
-
             String id = null;
             String name = null;
             double price = 0;
@@ -46,17 +46,63 @@ public class FeastMenuDAO {
                 if (line.isEmpty()) {
                     continue;
                 }
-
-                if (line.startsWith("[") && line.endsWith("]")) {
-
-                    id = line.substring(1, line.length() - 1);
+                if (line.startsWith("-------------------")) {
+                    if (id != null && ingredients != null) {
+                        FeastMenu feastMenu = new FeastMenu(id, name, price, ingredients);
+                        feastMap.put(feastMenu.getId(), feastMenu);
+                    }
+                    id = null;
                     name = null;
                     price = 0;
+                    ingredients = null;
+                    continue;
+                }
 
+                String[] parts = line.split("=", 2);
+                if (parts.length < 2) {
+                    continue;
+                }
+                String type = parts[0].trim();
+                String value = parts[1].trim();
+
+                if (ingredients == null) {
+                    ingredients = new LinkedHashMap<>();
+                }
+
+                switch (type) {
+                    case "id":
+                        id = value;
+                        break;
+                    case "Name":
+                        name = value;
+                        break;
+                    case "Price":
+                        try {
+                            price = Double.parseDouble(value);
+                        } catch (NumberFormatException e) {
+                            price = 0;
+                        }
+                        break;
+                    case "Khai vị":
+                        ingredients.put("Khai vị", Arrays.asList(value.split(";\\s*")));
+                        break;
+                    case "Món chính":
+                        ingredients.put("Món chính", Arrays.asList(value.split(";\\s*")));
+                        break;
+                    case "Tráng miệng":
+                        ingredients.put("Tráng miệng", Arrays.asList(value.split(";\\s*")));
+                        break;
                 }
             }
 
+            if (id != null && ingredients != null) {
+                FeastMenu feastMenu = new FeastMenu(id, name, price, ingredients);
+                feastMap.put(feastMenu.getId(), feastMenu);
+            }
+
         } catch (IOException e) {
+            System.out.println("the “feastMenu.csv” does not exist " + e.getMessage());
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
