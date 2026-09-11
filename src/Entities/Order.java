@@ -15,13 +15,11 @@ public class Order {
             DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public Order(String orderId, String customerId, String setMenuId,
-                 LocalDate eventDate, int numberOfTables, double totalCost) {
-        this.orderId = orderId;
+                 LocalDate eventDate, int numberOfTables) {
         this.customerId = customerId;
         this.setMenuId = setMenuId;
         this.eventDate = eventDate;
         this.numberOfTables = numberOfTables;
-        this.totalCost = totalCost;
     }
 
     public String getOrderId() {
