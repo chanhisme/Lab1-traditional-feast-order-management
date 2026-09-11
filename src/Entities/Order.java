@@ -16,10 +16,17 @@ public class Order {
 
     public Order(String orderId, String customerId, String setMenuId,
                  LocalDate eventDate, int numberOfTables) {
+        this.orderId = orderId;
         this.customerId = customerId;
         this.setMenuId = setMenuId;
         this.eventDate = eventDate;
         this.numberOfTables = numberOfTables;
+    }
+
+    public Order(String orderId, String customerId, String setMenuId,
+                 LocalDate eventDate, int numberOfTables, double totalCost) {
+        this(orderId, customerId, setMenuId, eventDate, numberOfTables);
+        this.totalCost = totalCost;
     }
 
     public String getOrderId() {
