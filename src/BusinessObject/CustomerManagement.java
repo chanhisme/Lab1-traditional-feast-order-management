@@ -17,7 +17,7 @@ import java.util.List;
 public class CustomerManagement {
 
     private final CustomerDAO customerDAO;
-
+    
     public CustomerManagement(CustomerDAO customerDAO) {
         this.customerDAO = customerDAO;
     }
@@ -114,6 +114,8 @@ public class CustomerManagement {
         }
         return result;
     }
+    
+    
     
     public String formatName(String name) {
         String[] parts = name.trim().split("\\s+");

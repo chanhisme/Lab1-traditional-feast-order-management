@@ -25,7 +25,7 @@ public class Program {
         SetMenuDAO setMenuDAO = new SetMenuDAO(setMenus);
         SetMenuManagement setMenuManagement = new SetMenuManagement(setMenuDAO);
         
-        setMenuDAO.load();
+        setMenuDAO.load();  
         customerDAO.load();
         int choice;
         try {
@@ -50,6 +50,8 @@ public class Program {
                         break;
                     case 4: 
                         setMenuManagement.displaySetMenu(setMenus);
+                        break;
+                    case 5:
                         break;
                     case 8:
                         customerManagment.displayAllCustomers(customerDAO.getAllCustomers());

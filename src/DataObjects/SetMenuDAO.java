@@ -37,20 +37,20 @@ import java.util.Map;
                         continue;
                     }
 
-                    String[] data = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+                    String[] data = line.split(",", 4);
 
                     String id = data[0].trim();
                     String name = data[1].trim();
                     double price = Double.parseDouble(data[2].trim());
                     String ingredientsData = data[3].trim();
-
+                      
                     if (ingredientsData.startsWith("\"") && ingredientsData.endsWith("\"")) {
                         ingredientsData = ingredientsData.substring(1, ingredientsData.length() - 1);
                     }
-
+                    
                     Map<String, List<String>> ingredients = new LinkedHashMap<>();
                     String[] categories = ingredientsData.split("#");
-
+                    
                     for (String category : categories) {
                         category = category.trim();
 
@@ -76,6 +76,10 @@ import java.util.Map;
 
         public void save() {
 
+        }
+
+        public SetMenu findSetMenu(String id){
+            return setMenu.get(id);
         }
     }
 
