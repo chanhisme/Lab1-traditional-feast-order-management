@@ -14,6 +14,7 @@ import Utilities.DataInput;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  *
@@ -32,7 +33,70 @@ public class OrderManagement {
         this.setMenuDAO = setMenuDAO;
     }
 
+    public void displayOneOrder(Order order) {
+        Customer customer = customerDAO.findCustomer(order.getCustomerId());
+        if (customer == null) {
+            System.out.println("Customer with id " + order.getCustomerId() + " not found");
+            return;
+        }
+
+        SetMenu setMenu = setMenuDAO.findSetMenu(order.getSetMenuId());
+        if (setMenu == null) {
+            System.out.println("Set Menu with id " + order.getSetMenuId() + " not found");
+            return;
+        }
+
+        System.out.println("----------------------------------------------------------------");
+        System.out.printf("Customer order information [Order ID: %s]\n", order.getOrderId());
+        System.out.println("----------------------------------------------------------------");
+        System.out.printf("Code %-15s: %s\n", customer.getId());
+        System.out.printf("Customer name  %-15s: %s\n", customer.getName());
+        System.out.printf("Phone number  %-15s: %s\n", customer.getPhone());
+        System.out.printf("Email  %-15s: %s\n", customer.getEmail());
+        System.out.println("----------------------------------------------------------------");
+        System.out.printf("Code of Set Menu %-20s: %s\n", setMenu.getId());
+        System.out.printf("Set menu name %-20s: %s\n", setMenu.getName());
+        System.out.printf("Number of tables %-20s: %d\n", order.getNumberOfTables());
+        System.out.printf("Set menu price %-20s: %s Vnd\n", SetMenuManagement.formatNumber(setMenu.getPrice()));
+
+        List<String> starter = setMenu.getIngredient().get("Khai vị");
+        List<String> mainCourse = setMenu.getIngredient().get("Món chính");
+        List<String> desert = setMenu.getIngredient().get("Tráng miệng");
+
+        System.out.print("+ Khai vị: ");
+        for (int i = 0; i < starter.size(); i++) {
+            System.out.print(starter.get(i));
+            if (i < starter.size() - 1) {
+                System.out.print("; ");
+            }
+        }
+        System.out.println();
+        System.out.print("+ Món chính: ");
+        for (int i = 0; i < mainCourse.size(); i++) {
+            System.out.print(mainCourse.get(i));
+            if (i < mainCourse.size() - 1) {
+                System.out.print("; ");
+            }
+        }
+        System.out.println();
+
+        System.out.print("+ Tráng miệng: ");
+        for (int i = 0; i < desert.size(); i++) {
+            System.out.print(desert.get(i));
+            if (i < desert.size() - 1) {
+                System.out.print("; ");
+            }
+        }
+        System.out.println("----------------------------------------------------------------");
+        System.out.printf("Total cost %-20s: %s Vnd\n", SetMenuManagement.formatNumber(order.getTotalCost()));
+        System.out.println("----------------------------------------------------------------");
+
+
+    }
+
     public void placeTable() {
+        List<Order> orders = orderDAO.getAllOrders();
+
         LocalDate eventDate = null;
         int numberOfTable = 0;
 
@@ -69,8 +133,20 @@ public class OrderManagement {
         } catch (Exception e) {
             System.out.println("Please enter a valid event date");
         }
+        for (Order order : orders) {
+            if (order.getCustomerId().equalsIgnoreCase(customerId)
+                    && order.getSetMenuId().equalsIgnoreCase(setMenuId)
+                    && order.getEventDate().equals(eventDate)) {
 
-
-        orderDAO.addOrder(new Order( orderDAO.generateOrderId(), customerId, setMenuId, eventDate, numberOfTable));
+            }
+            System.out.println("Dupplicate data!");
+            return;
+        }
+        Order order = new Order(orderDAO.generateOrderId(), customerId, setMenuId, eventDate, numberOfTable);
+        orderDAO.addOrder(order);
+        order.setTotalCost(setMenuDAO.findSetMenu(setMenuId).getPrice());
+        displayOneOrder(order);
     }
+
+
 }

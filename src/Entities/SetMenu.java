@@ -7,7 +7,7 @@ public class SetMenu {
     private String id;
     private String name;
     private double price;
-    
+
     private Map<String, List<String>> Ingredient;
 
     public SetMenu(String id, String name, double price, Map<String, List<String>> Ingredient) {
@@ -48,5 +48,5 @@ public class SetMenu {
     public void setIngredient(Map<String, List<String>> Ingredient) {
         this.Ingredient = Ingredient;
     }
-    
+
 }

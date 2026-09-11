@@ -22,11 +22,11 @@ public class SetMenuManagement {
         this.setMenuDAO = setMenuDAO;
     }
 
-    public String formatNumber(double price) {
+    public static String formatNumber(double price) {
         String number = String.valueOf((long) price);
         return number.replaceAll("(?<=\\d)(?=(\\d{3})+$)", ",");
     }
-
+    public void displayOneMenu(){}
     public void displaySetMenu(Map<String, SetMenu> setMenuMap) {
         System.out.println("-----------------------------------------------------------");
         System.out.println("List of Set Menus for ordering party:");

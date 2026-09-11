@@ -7,6 +7,7 @@ import Entities.Customer;
 import Entities.Order;
 import Entities.SetMenu;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -22,7 +23,10 @@ public class OrderDAO {
         this.setMenuMap = setMenuMap;
         this.customerMap = customerMap;
     }
-    
+
+    public ArrayList<Order> getAllOrders() {
+        return new ArrayList<>(orderMap.values());
+    }
     public void save(){
         
     }
