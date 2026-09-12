@@ -1,7 +1,9 @@
 package BusinessObject;
 
 import DataObjects.CustomerDAO;
+import DataObjects.OrderDAO;
 import Entities.Customer;
+import Entities.Order;
 import Utilities.Menu;
 import Utilities.DataInput;
 import java.util.LinkedHashMap;
@@ -24,9 +26,15 @@ public class Program {
         Map<String, SetMenu> setMenus = new LinkedHashMap<>();
         SetMenuDAO setMenuDAO = new SetMenuDAO(setMenus);
         SetMenuManagement setMenuManagement = new SetMenuManagement(setMenuDAO);
-        
+
+        Map <String, Order> orders = new LinkedHashMap<>();
+        OrderDAO orderDAO = new OrderDAO(orders);
+        OrderManagement orderManagement = new OrderManagement(orderDAO, customerDAO, setMenuDAO);
+
+        orderDAO.load();
         setMenuDAO.load();  
         customerDAO.load();
+
         int choice;
         try {
 
@@ -52,6 +60,7 @@ public class Program {
                         setMenuManagement.displaySetMenu(setMenus);
                         break;
                     case 5:
+                        orderManagement.placeTable();
                         break;
                     case 8:
                         customerManagment.displayAllCustomers(customerDAO.getAllCustomers());

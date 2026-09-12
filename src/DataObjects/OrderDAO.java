@@ -66,7 +66,7 @@ public class OrderDAO {
                 String setMenuId = parts[2].trim();
                 LocalDate eventDate = LocalDate.parse(parts[3].trim(), DATE_FORMATTER);
                 int numberOfTables = Integer.parseInt(parts[4].trim());
-                double totalCost = Double.parseDouble(parts[5].trim());
+                long totalCost = Long.parseLong(parts[5].trim());
 
                 Order order = new Order(orderId, customerId, setMenuId,
                         eventDate, numberOfTables, totalCost);

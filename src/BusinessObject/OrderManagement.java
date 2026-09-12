@@ -49,15 +49,15 @@ public class OrderManagement {
         System.out.println("----------------------------------------------------------------");
         System.out.printf("Customer order information [Order ID: %s]\n", order.getOrderId());
         System.out.println("----------------------------------------------------------------");
-        System.out.printf("Code %-15s: %s\n", customer.getId());
-        System.out.printf("Customer name  %-15s: %s\n", customer.getName());
-        System.out.printf("Phone number  %-15s: %s\n", customer.getPhone());
-        System.out.printf("Email  %-15s: %s\n", customer.getEmail());
+        System.out.printf("%-15s: %s\n", "Code ", customer.getId());
+        System.out.printf("%-15s: %s\n", "Customer name", customer.getName());
+        System.out.printf("%-15s: %s\n","Phone number", customer.getPhone());
+        System.out.printf("%-15s: %s\n", "Email", customer.getEmail());
         System.out.println("----------------------------------------------------------------");
-        System.out.printf("Code of Set Menu %-20s: %s\n", setMenu.getId());
-        System.out.printf("Set menu name %-20s: %s\n", setMenu.getName());
-        System.out.printf("Number of tables %-20s: %d\n", order.getNumberOfTables());
-        System.out.printf("Set menu price %-20s: %s Vnd\n", SetMenuManagement.formatNumber(setMenu.getPrice()));
+        System.out.printf("%-20s: %s\n", "Code of Set Menu", setMenu.getId());
+        System.out.printf("%-20s: %s\n", "Set menu name", setMenu.getName());
+        System.out.printf("%-20s: %d\n", "Number of tables",order.getNumberOfTables());
+        System.out.printf("%-20s: %s Vnd\n","Set menu price", SetMenuManagement.formatNumber(setMenu.getPrice()));
 
         List<String> starter = setMenu.getIngredient().get("Khai vị");
         List<String> mainCourse = setMenu.getIngredient().get("Món chính");
@@ -87,8 +87,8 @@ public class OrderManagement {
                 System.out.print("; ");
             }
         }
-        System.out.println("----------------------------------------------------------------");
-        System.out.printf("Total cost %-20s: %s Vnd\n", SetMenuManagement.formatNumber(order.getTotalCost()));
+        System.out.println("\n----------------------------------------------------------------");
+        System.out.printf("%-20s: %s Vnd\n", "Total cost", SetMenuManagement.formatNumber(order.getTotalCost()));
         System.out.println("----------------------------------------------------------------");
 
 
@@ -114,7 +114,7 @@ public class OrderManagement {
             return;
         }
         try {
-            numberOfTable = DataInput.getInteger();
+            numberOfTable = DataInput.getInteger("Enter the number of tables: ");
 
             if (numberOfTable <= 0) {
                 throw new Exception();
@@ -146,6 +146,8 @@ public class OrderManagement {
         orderDAO.addOrder(order);
         order.setTotalCost(setMenuDAO.findSetMenu(setMenuId).getPrice());
         displayOneOrder(order);
+        orderDAO.save();
+
     }
 
 
