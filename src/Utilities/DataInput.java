@@ -1,5 +1,6 @@
 package Utilities;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class DataInput {
@@ -7,7 +8,7 @@ public class DataInput {
 
     public static int getInteger(String message) throws Exception{
         int number = 0;
-        System.out.println(message);
+        System.out.print(message);
         number = getInteger();
         return number;
     }
@@ -38,4 +39,31 @@ public class DataInput {
         strInput = sc.nextLine();
         return strInput;
     }
+    
+    public static int getPositiveIntNumber(String message)throws Exception{
+        System.out.print(message);
+        int number = getInteger();
+        if(!DataValidation.checkPositiveNumber(number)){
+            throw new Exception("Number must be > 0");
+        }
+        return number;
+    }
+
+
+    public static LocalDate getLocalDate(String message) throws Exception{
+        System.out.print(message);
+        String date = getString();
+
+        if(!DataValidation.checkStringEmpty(date)){
+            throw new Exception("String cannot be empty");
+        }
+        if(!DataValidation.CheckDate(date)){
+            throw new Exception("Date invalid.");
+        }
+        return  LocalDate.parse(date);
+    }
+
+
+    
+    
 }

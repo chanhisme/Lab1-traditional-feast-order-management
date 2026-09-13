@@ -21,11 +21,12 @@ import java.util.List;
  * @author chanh
  */
 public class OrderManagement {
+
     private final OrderDAO orderDAO;
     private final CustomerDAO customerDAO;
     private final SetMenuDAO setMenuDAO;
-    private static final DateTimeFormatter DATE_FORMATTER =
-            DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter DATE_FORMATTER
+            = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public OrderManagement(OrderDAO orderDAO, CustomerDAO customerDAO, SetMenuDAO setMenuDAO) {
         this.orderDAO = orderDAO;
@@ -51,13 +52,13 @@ public class OrderManagement {
         System.out.println("----------------------------------------------------------------");
         System.out.printf("%-15s: %s\n", "Code ", customer.getId());
         System.out.printf("%-15s: %s\n", "Customer name", customer.getName());
-        System.out.printf("%-15s: %s\n","Phone number", customer.getPhone());
+        System.out.printf("%-15s: %s\n", "Phone number", customer.getPhone());
         System.out.printf("%-15s: %s\n", "Email", customer.getEmail());
         System.out.println("----------------------------------------------------------------");
         System.out.printf("%-20s: %s\n", "Code of Set Menu", setMenu.getId());
         System.out.printf("%-20s: %s\n", "Set menu name", setMenu.getName());
-        System.out.printf("%-20s: %d\n", "Number of tables",order.getNumberOfTables());
-        System.out.printf("%-20s: %s Vnd\n","Set menu price", SetMenuManagement.formatNumber(setMenu.getPrice()));
+        System.out.printf("%-20s: %d\n", "Number of tables", order.getNumberOfTables());
+        System.out.printf("%-20s: %s Vnd\n", "Set menu price", SetMenuManagement.formatNumber(setMenu.getPrice()));
 
         List<String> starter = setMenu.getIngredient().get("Khai vị");
         List<String> mainCourse = setMenu.getIngredient().get("Món chính");
@@ -91,7 +92,6 @@ public class OrderManagement {
         System.out.printf("%-20s: %s Vnd\n", "Total cost", SetMenuManagement.formatNumber(order.getTotalCost()));
         System.out.println("----------------------------------------------------------------");
 
-
     }
 
     public void placeTable() {
@@ -113,35 +113,31 @@ public class OrderManagement {
             System.out.println("Set Menu not found");
             return;
         }
-        try {
-            numberOfTable = DataInput.getInteger("Enter the number of tables: ");
 
-            if (numberOfTable <= 0) {
-                throw new Exception();
-            }
+        try {
+            numberOfTable = DataInput.getPositiveIntNumber("Enter the number of tables: ");
+
         } catch (Exception e) {
             System.out.println("Please enter a number must be greater than zero");
+            return;
         }
 
         try {
-            String date = DataInput.getString("Enter event date: ");
-            if (date == null || date.isEmpty()) {
-                throw new Exception("Please enter a valid event date");
+            eventDate = DataInput.getLocalDate("Enter event date: ");
+            if(!isFuture(eventDate)){
+                throw new Exception("The date must be in the future");
             }
-            eventDate = LocalDate.parse(date, DATE_FORMATTER);
-
         } catch (Exception e) {
             System.out.println("Please enter a valid event date");
-        }
-        for (Order order : orders) {
-            if (order.getCustomerId().equalsIgnoreCase(customerId)
-                    && order.getSetMenuId().equalsIgnoreCase(setMenuId)
-                    && order.getEventDate().equals(eventDate)) {
-
-            }
-            System.out.println("Dupplicate data!");
             return;
         }
+        for (Order order : orders) {
+            if (isDuplicateOrder(order, customerId, setMenuId, eventDate)) {
+                System.out.println("Dupplicate data!");
+                return;
+            }
+        }
+
         Order order = new Order(orderDAO.generateOrderId(), customerId, setMenuId, eventDate, numberOfTable);
         orderDAO.addOrder(order);
         order.setTotalCost(setMenuDAO.findSetMenu(setMenuId).getPrice());
@@ -150,5 +146,19 @@ public class OrderManagement {
 
     }
 
+    private boolean isDuplicateOrder( Order order, String customerId, String setMenuId, LocalDate eventDate) {
+        
+        return order.getCustomerId().equalsIgnoreCase(customerId)
+                && order.getSetMenuId().equalsIgnoreCase(setMenuId)
+                && order.getEventDate().equals(eventDate);
+    }
+    
+    private boolean isFuture(LocalDate eventDate){
+        boolean isValid = false;
+        if(eventDate.isAfter(LocalDate.now())){
+            isValid = true;
+        }
+        return isValid;
+    }
 
 }
