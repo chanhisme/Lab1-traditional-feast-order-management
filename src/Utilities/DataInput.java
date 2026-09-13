@@ -40,7 +40,10 @@ public class DataInput {
         String strInput;
         Scanner sc = new Scanner(System.in);
         strInput = sc.nextLine();
-        return strInput;
+        if (strInput == null) {
+            return null;
+        }
+        return strInput.trim();
     }
 
     public static int getPositiveIntNumber(String message) throws Exception {
@@ -54,7 +57,7 @@ public class DataInput {
 
     public static LocalDate getLocalDate(String message) throws Exception {
         System.out.print(message);
-        String date = getString();
+        String date = DataNormalize.normalizeDate(getString());
 
         if (!DataValidation.isNonEmptyString(date)) {
             throw new Exception("String cannot be empty");

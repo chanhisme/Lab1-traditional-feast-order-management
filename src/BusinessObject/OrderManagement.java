@@ -11,6 +11,7 @@ import Entities.Customer;
 import Entities.Order;
 import Entities.SetMenu;
 import Utilities.DataInput;
+import Utilities.DataNormalize;
 import Utilities.DataValidation;
 import java.time.LocalDate;
 import java.util.List;
@@ -74,14 +75,14 @@ public class OrderManagement {
         LocalDate eventDate = null;
         int numberOfTable = 0;
 
-        String customerId = DataInput.getString("Enter customer id: ");
+        String customerId = DataNormalize.normalizeId(DataInput.getString("Enter customer id: "));
         Customer customer = customerDAO.findCustomerById(customerId);
         if (customer == null) {
             System.out.println("Customer not found");
             return;
         }
 
-        String setMenuId = DataInput.getString("Enter set menu id: ");
+        String setMenuId = DataNormalize.normalizeId(DataInput.getString("Enter set menu id: "));
         SetMenu setMenu = setMenuDAO.findSetMenu(setMenuId);
         if (setMenu == null) {
             System.out.println("Set Menu not found");

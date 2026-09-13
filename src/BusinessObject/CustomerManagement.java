@@ -7,6 +7,7 @@ package BusinessObject;
 import DataObjects.CustomerDAO;
 import Entities.Customer;
 import Utilities.DataInput;
+import Utilities.DataNormalize;
 import Utilities.DataValidation;
 
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public class CustomerManagement {
 
     public void updateCustomer() {
         try {
-            String id = DataInput.getString("Enter customer id: ");
+            String id = DataNormalize.normalizeId(DataInput.getString("Enter customer id: "));
             Customer customer = customerDAO.findCustomerById(id);
             if (customer == null) {
                 System.out.println(">>The customer not found.");
@@ -110,7 +111,7 @@ public class CustomerManagement {
 
     public ArrayList<Customer> findCustomerByName() {
         ArrayList<Customer> result = null;
-        String name = DataInput.getString("Enter customer name: ");
+        String name = DataNormalize.normalizeString(DataInput.getString("Enter customer name: "));
         if (name != null) {
             result = customerDAO.findCustomerByName(name);
         }

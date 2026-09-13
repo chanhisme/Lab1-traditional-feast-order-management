@@ -25,7 +25,7 @@ public class DataValidation {
 
     public static boolean isNonEmptyString(String value) {
         boolean result = true;
-        if (value.isEmpty()) {
+        if (value == null || value.isEmpty()) {
             result = false;
         }
         return result;
