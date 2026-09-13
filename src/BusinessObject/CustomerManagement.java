@@ -7,6 +7,8 @@ package BusinessObject;
 import DataObjects.CustomerDAO;
 import Entities.Customer;
 import Utilities.DataInput;
+import Utilities.DataValidation;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,17 +92,17 @@ public class CustomerManagement {
     
     public void setNewCustomer(Customer customer) throws Exception{
         String name = DataInput.getString("Enter new name: ");
-        if (!name.isEmpty()) {
+        if (DataValidation.isNonEmptyString(name)) {
             customer.setName(name);
         }
         
         String phone = DataInput.getString("Enter new phone: ");
-        if(!phone.isEmpty()){
+        if(DataValidation.isNonEmptyString(phone)){
             customer.setPhone(phone);
         }
         
         String email = DataInput.getString("Enter new email");
-        if(!email.isEmpty()){
+        if(DataValidation.isNonEmptyString(email)){
             customer.setEmail(email);
         }
         

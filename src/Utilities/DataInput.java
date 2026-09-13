@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class DataInput {
     
-
+    
     public static int getInteger(String message) throws Exception{
         int number = 0;
         System.out.print(message);
@@ -54,7 +54,7 @@ public class DataInput {
         System.out.print(message);
         String date = getString();
 
-        if(!DataValidation.checkStringEmpty(date)){
+        if(!DataValidation.isNonEmptyString(date)){
             throw new Exception("String cannot be empty");
         }
         if(!DataValidation.CheckDate(date)){

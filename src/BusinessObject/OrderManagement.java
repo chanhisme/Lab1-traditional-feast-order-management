@@ -11,6 +11,7 @@ import Entities.Customer;
 import Entities.Order;
 import Entities.SetMenu;
 import Utilities.DataInput;
+import Utilities.DataValidation;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,8 +26,6 @@ public class OrderManagement {
     private final OrderDAO orderDAO;
     private final CustomerDAO customerDAO;
     private final SetMenuDAO setMenuDAO;
-    private static final DateTimeFormatter DATE_FORMATTER
-            = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public OrderManagement(OrderDAO orderDAO, CustomerDAO customerDAO, SetMenuDAO setMenuDAO) {
         this.orderDAO = orderDAO;
@@ -124,7 +123,7 @@ public class OrderManagement {
 
         try {
             eventDate = DataInput.getLocalDate("Enter event date: ");
-            if(!isFuture(eventDate)){
+            if(!DataValidation.isFutureDate(eventDate)){
                 throw new Exception("The date must be in the future");
             }
         } catch (Exception e) {
@@ -153,12 +152,6 @@ public class OrderManagement {
                 && order.getEventDate().equals(eventDate);
     }
     
-    private boolean isFuture(LocalDate eventDate){
-        boolean isValid = false;
-        if(eventDate.isAfter(LocalDate.now())){
-            isValid = true;
-        }
-        return isValid;
-    }
+    
 
 }
