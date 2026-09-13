@@ -3,9 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DataObjects;
-import Entities.Customer;
 import Entities.Order;
-import Entities.SetMenu;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
