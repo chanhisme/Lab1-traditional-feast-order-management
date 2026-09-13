@@ -30,7 +30,7 @@ public class CustomerDAO {
         customers.put(customer.getId(), customer);
     }
 
-    public Customer findCustomer(String id) {
+    public Customer findCustomerById(String id) {
         return customers.get(id);
     }
 
@@ -70,15 +70,14 @@ public class CustomerDAO {
         return new ArrayList<>(customers.values());
     }
 
-    public void updateCustomer(Customer customer) throws Exception {
-        Customer cus = findCustomer(customer.getName());
-        if (cus != null) {
-            cus.setName(customer.getName());
-            cus.setPhone(customer.getPhone());
-            cus.setEmail(customer.getEmail());
-
-        }
-    }
+    // public void updateCustomer(Customer customer) throws Exception {
+    //     Customer cus = findCustomerById(customer.getId());
+    //     if (cus != null) {
+    //         cus.setName(customer.getName());
+    //         cus.setPhone(customer.getPhone());
+    //         cus.setEmail(customer.getEmail());
+    //     }
+    // }
 
     public void load() {
         try ( BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
@@ -92,7 +91,6 @@ public class CustomerDAO {
                 String email = parts[3];
                 customers.put(id, new Customer(id, name, phone, email));
             }
-            System.out.println("ok");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

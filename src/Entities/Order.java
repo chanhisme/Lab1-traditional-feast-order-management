@@ -44,7 +44,7 @@ public class Order {
 
     public String getSetMenuId() {
         return setMenuId;
-    }
+    } 
 
     public LocalDate getEventDate() {
         return eventDate;
@@ -54,7 +54,7 @@ public class Order {
         return numberOfTables;
     }
 
-    public double getTotalCost() {
+    public long getTotalCost() {
         return totalCost;
     }
 

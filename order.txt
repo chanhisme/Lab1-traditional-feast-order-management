@@ -1,2 +1,2 @@
 OrderID,CustomerID,SetMenuID,EventDate,NumberOfTables,TotalCost
-1,K1234,PW001,31/03/2027,10,3.75E7
+1,K1234,PW001,31/03/2027,10,37500000

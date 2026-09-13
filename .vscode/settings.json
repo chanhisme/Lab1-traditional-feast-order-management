@@ -4,5 +4,6 @@
     "java.project.sourcePaths": [
         "src"
     ],
-    "java.project.referencedLibraries": []
+    "java.project.referencedLibraries": [],
+    "CodeGPT.apiKey": "CodeGPT Plus Beta"
 }

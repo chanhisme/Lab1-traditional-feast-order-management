@@ -56,6 +56,7 @@ import java.util.Map;
 
                         if (category.startsWith("+ Khai vị:")) {
                             String dishes = category.substring("+ Khai vị:".length()).trim();
+                            
                             ingredients.put("Khai vị", Arrays.asList(dishes.split(";")));
                         } else if (category.startsWith("+ Món chính:")) {
                             String dishes = category.substring("+ Món chính:".length()).trim();

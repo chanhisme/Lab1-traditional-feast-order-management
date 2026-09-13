@@ -12,9 +12,7 @@ import Entities.Order;
 import Entities.SetMenu;
 import Utilities.DataInput;
 import Utilities.DataValidation;
-
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -34,7 +32,7 @@ public class OrderManagement {
     }
 
     public void displayOneOrder(Order order) {
-        Customer customer = customerDAO.findCustomer(order.getCustomerId());
+        Customer customer = customerDAO.findCustomerById(order.getCustomerId());
         if (customer == null) {
             System.out.println("Customer with id " + order.getCustomerId() + " not found");
             return;
@@ -59,34 +57,11 @@ public class OrderManagement {
         System.out.printf("%-20s: %d\n", "Number of tables", order.getNumberOfTables());
         System.out.printf("%-20s: %s Vnd\n", "Set menu price", SetMenuManagement.formatNumber(setMenu.getPrice()));
 
-        List<String> starter = setMenu.getIngredient().get("Khai vị");
-        List<String> mainCourse = setMenu.getIngredient().get("Món chính");
-        List<String> desert = setMenu.getIngredient().get("Tráng miệng");
+       
+        SetMenuManagement.displayDish("+ Khai vị: ", setMenu.getIngredient().get("Khai vị"));
+        SetMenuManagement.displayDish("+ Món chính: ", setMenu.getIngredient().get("Món chính"));
+        SetMenuManagement.displayDish("+ Tráng miệng: ", setMenu.getIngredient().get("Tráng miệng"));       
 
-        System.out.print("+ Khai vị: ");
-        for (int i = 0; i < starter.size(); i++) {
-            System.out.print(starter.get(i));
-            if (i < starter.size() - 1) {
-                System.out.print("; ");
-            }
-        }
-        System.out.println();
-        System.out.print("+ Món chính: ");
-        for (int i = 0; i < mainCourse.size(); i++) {
-            System.out.print(mainCourse.get(i));
-            if (i < mainCourse.size() - 1) {
-                System.out.print("; ");
-            }
-        }
-        System.out.println();
-
-        System.out.print("+ Tráng miệng: ");
-        for (int i = 0; i < desert.size(); i++) {
-            System.out.print(desert.get(i));
-            if (i < desert.size() - 1) {
-                System.out.print("; ");
-            }
-        }
         System.out.println("\n----------------------------------------------------------------");
         System.out.printf("%-20s: %s Vnd\n", "Total cost", SetMenuManagement.formatNumber(order.getTotalCost()));
         System.out.println("----------------------------------------------------------------");
@@ -100,7 +75,7 @@ public class OrderManagement {
         int numberOfTable = 0;
 
         String customerId = DataInput.getString("Enter customer id: ");
-        Customer customer = customerDAO.findCustomer(customerId);
+        Customer customer = customerDAO.findCustomerById(customerId);
         if (customer == null) {
             System.out.println("Customer not found");
             return;

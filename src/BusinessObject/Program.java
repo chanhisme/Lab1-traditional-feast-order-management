@@ -39,7 +39,7 @@ public class Program {
         try {
 
             do {
-                System.out.println("***************Main Menu***************");
+                System.out.println("\n***************Main Menu***************");
                 Menu.printMenu(
                         "1. Register customers|2. Update customer information|"
                         + "3. Search customer information by name|4. Display feast menus|5. Place a feast order|"

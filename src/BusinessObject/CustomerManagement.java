@@ -19,7 +19,7 @@ import java.util.List;
 public class CustomerManagement {
 
     private final CustomerDAO customerDAO;
-    
+
     public CustomerManagement(CustomerDAO customerDAO) {
         this.customerDAO = customerDAO;
     }
@@ -35,7 +35,7 @@ public class CustomerManagement {
     public void addNewCustomer() {
         try {
             Customer customer = inputCustomer();
-            if (customerDAO.findCustomer(customer.getId()) != null) {
+            if (customerDAO.findCustomerById(customer.getId()) != null) {
                 System.out.println("Customer already exists!");
                 return;
             }
@@ -45,19 +45,19 @@ public class CustomerManagement {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+
     }
 
     public void displayAllCustomers(List<Customer> customers) {
-        if(customers == null || customers.size() < 1){
+        if (customers == null || customers.size() < 1) {
             System.out.println("No one matches the search criteria!");
             return;
         }
-        
+
         System.out.println("----------------------------------------------------------------");
         System.out.printf(
                 "%-5s | %-20s | %-10s | %-25s%n",
-                "Code", "Customer Name", "Phone", "Email"
-        );
+                "Code", "Customer Name", "Phone", "Email");
         System.out.println("----------------------------------------------------------------");
 
         for (Customer customer : customers) {
@@ -67,8 +67,7 @@ public class CustomerManagement {
                     customer.getId(),
                     formatName(customer.getName()),
                     customer.getPhone(),
-                    customer.getEmail()
-            );
+                    customer.getEmail());
         }
 
         System.out.println("----------------------------------------------------------------");
@@ -77,48 +76,47 @@ public class CustomerManagement {
     public void updateCustomer() {
         try {
             String id = DataInput.getString("Enter customer id: ");
-            Customer customer = customerDAO.findCustomer(id);
+            Customer customer = customerDAO.findCustomerById(id);
             if (customer == null) {
                 System.out.println(">>The customer not found.");
                 return;
             }
             setNewCustomer(customer);
             System.out.println(">>The customer has updated successfully.");
-        }
-        catch(Exception e){
+            customerDAO.save();
+
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
-    
-    public void setNewCustomer(Customer customer) throws Exception{
+
+    public void setNewCustomer(Customer customer) throws Exception {
         String name = DataInput.getString("Enter new name: ");
         if (DataValidation.isNonEmptyString(name)) {
             customer.setName(name);
         }
-        
+
         String phone = DataInput.getString("Enter new phone: ");
-        if(DataValidation.isNonEmptyString(phone)){
+        if (DataValidation.isNonEmptyString(phone)) {
             customer.setPhone(phone);
         }
-        
+
         String email = DataInput.getString("Enter new email");
-        if(DataValidation.isNonEmptyString(email)){
+        if (DataValidation.isNonEmptyString(email)) {
             customer.setEmail(email);
         }
-        
+
     }
-    
-    public ArrayList <Customer> findCustomerByName(){
-        ArrayList <Customer> result = null;
+
+    public ArrayList<Customer> findCustomerByName() {
+        ArrayList<Customer> result = null;
         String name = DataInput.getString("Enter customer name: ");
-        if(name != null){
+        if (name != null) {
             result = customerDAO.findCustomerByName(name);
         }
         return result;
     }
-    
-    
-    
+
     public String formatName(String name) {
         String[] parts = name.trim().split("\\s+");
 

@@ -31,7 +31,7 @@ public class DataValidation {
         return result;
     }
 
-    public static boolean CheckDate(String input) {
+    public static boolean checkDate(String input) {
         try {
             LocalDate.parse(input, DATE_FORMATTER);
             return true;
