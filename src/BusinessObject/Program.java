@@ -62,6 +62,7 @@ public class Program {
                     case 5:
                         orderManagement.placeTable();
                         break;
+                    case 6: 
                     case 8:
                         customerManagment.displayAllCustomers(customerDAO.getAllCustomers());
                         break;

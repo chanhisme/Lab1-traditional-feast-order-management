@@ -58,10 +58,9 @@ public class OrderManagement {
         System.out.printf("%-20s: %d\n", "Number of tables", order.getNumberOfTables());
         System.out.printf("%-20s: %s Vnd\n", "Set menu price", SetMenuManagement.formatNumber(setMenu.getPrice()));
 
-       
         SetMenuManagement.displayDish("+ Khai vị: ", setMenu.getIngredient().get("Khai vị"));
         SetMenuManagement.displayDish("+ Món chính: ", setMenu.getIngredient().get("Món chính"));
-        SetMenuManagement.displayDish("+ Tráng miệng: ", setMenu.getIngredient().get("Tráng miệng"));       
+        SetMenuManagement.displayDish("+ Tráng miệng: ", setMenu.getIngredient().get("Tráng miệng"));
 
         System.out.println("\n----------------------------------------------------------------");
         System.out.printf("%-20s: %s Vnd\n", "Total cost", SetMenuManagement.formatNumber(order.getTotalCost()));
@@ -99,7 +98,7 @@ public class OrderManagement {
 
         try {
             eventDate = DataInput.getLocalDate("Enter event date: ");
-            if(!DataValidation.isFutureDate(eventDate)){
+            if (!DataValidation.isFutureDate(eventDate)) {
                 throw new Exception("The date must be in the future");
             }
         } catch (Exception e) {
@@ -121,13 +120,115 @@ public class OrderManagement {
 
     }
 
-    private boolean isDuplicateOrder( Order order, String customerId, String setMenuId, LocalDate eventDate) {
-        
+    private boolean isDuplicateOrder(Order order, String customerId, String setMenuId, LocalDate eventDate) {
+
         return order.getCustomerId().equalsIgnoreCase(customerId)
                 && order.getSetMenuId().equalsIgnoreCase(setMenuId)
                 && order.getEventDate().equals(eventDate);
     }
-    
-    
+
+    public void updateOrder() {
+        String id = DataNormalize.normalizeId(DataInput.getString("Enter order id: "));
+
+        Order order = orderDAO.findOrderById(id);
+        if (order == null) {
+            System.out.println("This Order does not exist.");
+            return;
+        }
+        if (setNewOrder(order)) {
+            orderDAO.save();
+            System.out.println("Update order successfully!");
+        } else {
+            System.out.println("Update order failed.");
+        }
+    }
+
+    public boolean setNewOrder(Order order) {
+        String newSetMenuId = inputNewSetMenuId(order);
+        if (newSetMenuId == null) return false;
+
+        int newNumberOfTables = inputNewNumberOfTables(order);
+        if (newNumberOfTables == -1) return false;
+
+        LocalDate newEventDate = inputNewEventDate(order);
+        if (newEventDate == null) return false;
+
+        if (hasDuplicateOrder(order, newSetMenuId, newEventDate)) {
+            System.out.println("Duplicate data! This customer already ordered this menu on the selected date.");
+            return false;
+        }
+
+        SetMenu setMenu = setMenuDAO.findSetMenu(newSetMenuId);
+        order.setSetMenuId(newSetMenuId);
+        order.setNumberOfTables(newNumberOfTables);
+        order.setEventDate(newEventDate);
+        order.setTotalCost(setMenu.getPrice());
+        return true;
+    }
+
+    private String inputNewSetMenuId(Order order) {
+        String input = DataInput.getString("Enter new set menu id (leave empty to keep current): ");
+        if (input.isEmpty()) {
+            return order.getSetMenuId();
+        }
+        String normalized = DataNormalize.normalizeId(input);
+        if (setMenuDAO.findSetMenu(normalized) == null) {
+            System.out.println("This Set Menu does not exist!");
+            return null;
+        }
+        return normalized;
+    }
+
+    private int inputNewNumberOfTables(Order order) {
+        String input = DataInput.getString("Enter new number of tables (leave empty to keep current): ");
+        if (input.isEmpty()) {
+            return order.getNumberOfTables();
+        }
+        try {
+            if (!input.matches("\\d{1,10}")) {
+                throw new Exception("Data invalid. Must be a valid integer.");
+            }
+            int value = Integer.parseInt(input);
+            if (!DataValidation.checkPositiveNumber(value)) {
+                throw new Exception("Number of tables must be > 0");
+            }
+            return value;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return -1;
+        }
+    }
+
+    private LocalDate inputNewEventDate(Order order) {
+        String input = DataInput.getString("Enter new event date (leave empty to keep current): ");
+        if (input.isEmpty()) {
+            return order.getEventDate();
+        }
+        try {
+            String normalized = DataNormalize.normalizeDate(input);
+            if (!DataValidation.checkDate(normalized)) {
+                throw new Exception("Date invalid. The format must be dd/MM/yyyy");
+            }
+            LocalDate date = LocalDate.parse(normalized, DataValidation.DATE_FORMATTER);
+            if (!DataValidation.isFutureDate(date)) {
+                throw new Exception("The date must be in the future");
+            }
+            return date;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+    private boolean hasDuplicateOrder(Order current, String menuId, LocalDate date) {
+        for (Order other : orderDAO.getAllOrders()) {
+            if (!other.getOrderId().equalsIgnoreCase(current.getOrderId())) {
+                if (isDuplicateOrder(other, current.getCustomerId(), menuId, date)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 }

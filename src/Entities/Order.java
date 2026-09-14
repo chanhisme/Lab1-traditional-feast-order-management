@@ -33,6 +33,13 @@ public class Order {
     }
 
 
+    public void setSetMenuId(String setMenuId) {
+        this.setMenuId = setMenuId;
+    }
+
+   
+
+
 
     public String getOrderId() {
         return orderId;

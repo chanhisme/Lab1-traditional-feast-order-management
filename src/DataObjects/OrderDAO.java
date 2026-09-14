@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DataObjects;
+
 import Entities.Order;
 
 import java.io.BufferedReader;
@@ -20,11 +21,12 @@ import java.util.Map;
  * @author chanh
  */
 public class OrderDAO {
-    private final Map <String, Order>orderMap;
+
+    private final Map<String, Order> orderMap;
     private final String PATH = "order.txt";
     private static final String HEADER = "OrderID,CustomerID,SetMenuID,EventDate,NumberOfTables,TotalCost";
-    private static final DateTimeFormatter DATE_FORMATTER =
-            DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter DATE_FORMATTER
+            = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public OrderDAO(Map<String, Order> orderMap) {
         this.orderMap = orderMap;
@@ -33,8 +35,9 @@ public class OrderDAO {
     public ArrayList<Order> getAllOrders() {
         return new ArrayList<>(orderMap.values());
     }
-    public void save(){
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(PATH))) {
+
+    public void save() {
+        try ( BufferedWriter writer = new BufferedWriter(new FileWriter(PATH))) {
             writer.write(HEADER);
             writer.newLine();
             for (Order order : orderMap.values()) {
@@ -52,9 +55,9 @@ public class OrderDAO {
             System.out.println(e.getMessage());
         }
     }
-    
-    public void load(){
-        try (BufferedReader reader = new BufferedReader(new FileReader(PATH))) {
+
+    public void load() {
+        try ( BufferedReader reader = new BufferedReader(new FileReader(PATH))) {
             reader.readLine();
             String line;
             while ((line = reader.readLine()) != null) {
@@ -74,10 +77,11 @@ public class OrderDAO {
             System.out.println(e.getMessage());
         }
     }
-    
-    public void addOrder(Order order){
+
+    public void addOrder(Order order) {
         orderMap.put(order.getOrderId(), order);
     }
+
     public String generateOrderId() {
         int id = 1;
 
@@ -86,5 +90,9 @@ public class OrderDAO {
         }
 
         return String.valueOf(id);
+    }
+
+    public Order findOrderById(String id) {
+        return orderMap.get(id);
     }
 }
