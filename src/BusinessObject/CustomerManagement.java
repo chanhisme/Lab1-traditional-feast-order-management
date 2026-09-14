@@ -55,23 +55,19 @@ public class CustomerManagement {
             return;
         }
 
-        System.out.println("----------------------------------------------------------------");
-        System.out.printf(
-                "%-5s | %-20s | %-10s | %-25s%n",
-                "Code", "Customer Name", "Phone", "Email");
-        System.out.println("----------------------------------------------------------------");
+        String rowFormat = "%-5s | %-20s | %-12s | %-25s%n";
+        String line = "-----------------------------------------------------------------------";
+        System.out.println(line);
+        System.out.printf(rowFormat, "Code", "Customer Name", "Phone", "Email");
+        System.out.println(line);
 
         for (Customer customer : customers) {
 
-            System.out.printf(
-                    "%s | %s | %s | %s%n",
-                    customer.getId(),
-                    formatName(customer.getName()),
-                    customer.getPhone(),
+            System.out.printf(rowFormat, customer.getId(), formatName(customer.getName()), customer.getPhone(),
                     customer.getEmail());
         }
 
-        System.out.println("----------------------------------------------------------------");
+        System.out.println(line);
     }
 
     public void updateCustomer() {
@@ -82,32 +78,51 @@ public class CustomerManagement {
                 System.out.println(">>The customer not found.");
                 return;
             }
-            setNewCustomer(customer);
-            System.out.println(">>The customer has updated successfully.");
-            customerDAO.save();
+
+            if (setNewCustomer(customer)) {
+                customerDAO.save();
+                System.out.println(">>The customer has updated successfully.");
+            }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void setNewCustomer(Customer customer) throws Exception {
-        String name = DataInput.getString("Enter new name: ");
-        if (DataValidation.isNonEmptyString(name)) {
-            customer.setName(name);
-        }
+    public boolean setNewCustomer(Customer customer) {
+    String oldName = customer.getName();
+    String oldPhone = customer.getPhone();
+    String oldEmail = customer.getEmail();
+    boolean isSuccess = true;
+    
+    String nameInput = DataInput.getString("Enter new name: ");
+    String phoneInput = DataInput.getString("Enter new phone: ");
+    String emailInput = DataInput.getString("Enter new email: ");
 
-        String phone = DataInput.getString("Enter new phone: ");
-        if (DataValidation.isNonEmptyString(phone)) {
-            customer.setPhone(phone);
+    try {
+        if (DataValidation.isNonEmptyString(nameInput)) {
+            customer.setName(nameInput);  
         }
-
-        String email = DataInput.getString("Enter new email");
-        if (DataValidation.isNonEmptyString(email)) {
-            customer.setEmail(email);
+        if (DataValidation.isNonEmptyString(phoneInput)) {
+            customer.setPhone(phoneInput); 
         }
+        if (DataValidation.isNonEmptyString(emailInput)) {
+            customer.setEmail(emailInput);
+        }
+    } catch (Exception e) {
+        System.out.println(e.getMessage());
 
+        try {
+            customer.setName(oldName);
+            customer.setPhone(oldPhone);
+            customer.setEmail(oldEmail);
+        } catch (Exception restoreEx) {
+            System.out.println("Rollback failed: " + restoreEx.getMessage());
+        }
+        isSuccess = false;
     }
+    return isSuccess; 
+}
 
     public ArrayList<Customer> findCustomerByName() {
         ArrayList<Customer> result = null;
@@ -118,7 +133,7 @@ public class CustomerManagement {
         return result;
     }
 
-    public String formatName(String name) {
+    private String formatName(String name) {
         String[] parts = name.trim().split("\\s+");
 
         if (parts.length < 2) {

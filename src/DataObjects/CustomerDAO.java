@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Map;
 
 /**
@@ -37,31 +38,17 @@ public class CustomerDAO {
     public ArrayList<Customer> findCustomerByName(String targetName) {
         ArrayList<Customer> result = new ArrayList<>();
 
-        String[] findName = targetName.split(" ");
+        targetName = targetName.trim();
+
         for (Map.Entry<String, Customer> entry : customers.entrySet()) {
             Customer customer = entry.getValue();
 
-            String[] nameWord = customer.getName().split(" ");
-            
-            if (findName.length > nameWord.length) {
-                continue;
-            }
-            
-            boolean isMatch = true;
-            
-            int j = nameWord.length - 1;
-            for (int i = findName.length - 1; i >= 0; i--) {
-                if (!findName[i].equalsIgnoreCase(nameWord[j])) {
-                    isMatch = false;
-                    break;
-                }
-                --j;
-            }
-            if (isMatch == true) {
+            if (customer.getName().toLowerCase().contains(targetName.toLowerCase())) {
                 result.add(customer);
             }
-
         }
+
+        result.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
 
         return result;
     }
@@ -71,16 +58,16 @@ public class CustomerDAO {
     }
 
     // public void updateCustomer(Customer customer) throws Exception {
-    //     Customer cus = findCustomerById(customer.getId());
-    //     if (cus != null) {
-    //         cus.setName(customer.getName());
-    //         cus.setPhone(customer.getPhone());
-    //         cus.setEmail(customer.getEmail());
-    //     }
+    // Customer cus = findCustomerById(customer.getId());
+    // if (cus != null) {
+    // cus.setName(customer.getName());
+    // cus.setPhone(customer.getPhone());
+    // cus.setEmail(customer.getEmail());
+    // }
     // }
 
     public void load() {
-        try ( BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             reader.readLine();
             String line;
             while ((line = reader.readLine()) != null) {
@@ -97,16 +84,15 @@ public class CustomerDAO {
     }
 
     public void save() {
-        try ( BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
             writer.write("Id, name, phone, email");
             writer.newLine();
             for (Customer customer : customers.values()) {
                 writer.write(
                         customer.getId() + ", "
-                        + customer.getName() + ", "
-                        + customer.getPhone() + ", "
-                        + customer.getEmail()
-                );
+                                + customer.getName() + ", "
+                                + customer.getPhone() + ", "
+                                + customer.getEmail());
 
                 writer.newLine();
             }

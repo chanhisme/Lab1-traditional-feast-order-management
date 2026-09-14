@@ -13,7 +13,7 @@ public class DataNormalize {
     public static String normalizePhone(String input) {
         return input.replaceAll("\\s+", "");
     }
-
+ 
     public static String normalizeEmail(String input) {
         return input.trim();
     }
