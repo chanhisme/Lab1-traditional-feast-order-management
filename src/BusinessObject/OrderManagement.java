@@ -245,7 +245,13 @@ public class OrderManagement {
         return false;
     }
 
+
+    
     public void displayAllOrder(List<Order> orders) {
+        if(orders == null || orders.isEmpty()){
+            System.out.println("this order list is empty");
+            return;
+        }
         System.out.println("ID | Event date | Customer ID | Set Menu | Price | Tables | Cost");
 
         for (Order order : orders) {
@@ -268,28 +274,6 @@ public class OrderManagement {
             return o1.getEventDate().compareTo(o2.getEventDate());
         });
 
-        System.out.printf(
-                "%-4s | %-10s | %-11s | %-8s | %14s | %6s | %12s%n",
-                "ID",
-                "Event date",
-                "Customer ID",
-                "Set Menu",
-                "Price",
-                "Tables",
-                "Cost"
-        );
-
-        for (Order order : orders) {
-            System.out.printf(
-                    "%-4s | %-10s | %-11s | %-8s | %,14.0f | %6d | %,12d%n",
-                    order.getOrderId(),
-                    order.getEventDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-                    order.getCustomerId(),
-                    order.getSetMenuId(),
-                    setMenuDAO.findSetMenu(order.getSetMenuId()).getPrice(),
-                    order.getNumberOfTables(),
-                    order.getTotalCost()
-            );
-        }
+        displayAllOrder(orders);
     }
 }

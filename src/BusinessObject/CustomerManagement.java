@@ -51,8 +51,8 @@ public class CustomerManagement {
 
     public void displayAllCustomers(List<Customer> customers) {
         
-        if (customers == null || customers.size() < 1) {
-            System.out.println("No one matches the search criteria!");
+        if (customers == null || customers.isEmpty()) {
+            System.out.println("this customer list is empty");
             return;
         }
 
@@ -75,24 +75,7 @@ public class CustomerManagement {
         customers.sort( (c1, c2) -> {
             return c1.getName().compareToIgnoreCase(c2.getName());
         });
-        if (customers == null || customers.size() < 1) {
-            System.out.println("No one matches the search criteria!");
-            return;
-        }
-
-        String rowFormat = "%-5s | %-20s | %-12s | %-25s%n";
-        String line = "-----------------------------------------------------------------------";
-        System.out.println(line);
-        System.out.printf(rowFormat, "Code", "Customer Name", "Phone", "Email");
-        System.out.println(line);
-
-        for (Customer customer : customers) {
-
-            System.out.printf(rowFormat, customer.getId(), formatName(customer.getName()), customer.getPhone(),
-                    customer.getEmail());
-        }
-
-        System.out.println(line);
+        displayAllCustomers(customers);
     }
     
     public void updateCustomer() {
