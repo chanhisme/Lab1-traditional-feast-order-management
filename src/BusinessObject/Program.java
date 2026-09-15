@@ -37,54 +37,54 @@ public class Program {
         customerDAO.load();
 
         int choice;
-        try {
+        do {
+            System.out.println("\n***************Main Menu***************");
+            Menu.printMenu(
+                    "1. Register customers|2. Update customer information|"
+                    + "3. Search customer information by name|4. Display feast menus|5. Place a feast order|"
+                    + "6. Update order information|7. Save data to file|8. Display Customer or Order lists|Select:");
 
-            do {
-                System.out.println("\n***************Main Menu***************");
-                Menu.printMenu(
-                        "1. Register customers|2. Update customer information|"
-                        + "3. Search customer information by name|4. Display feast menus|5. Place a feast order|"
-                        + "6. Update order information|7. Save data to file|8. Display Customer or Order lists|Select:");
-
+            try {
                 choice = DataInput.getInteger("Enter your choice: ");
-                switch (choice) {
-                    case 1:
-                        customerManagement.addNewCustomer();
-                        break;
-                    case 2:
-                        customerManagement.updateCustomer();
-                        break;
-                    case 3:
-                        customerManagement.displayAllCustomers(customerManagement.findCustomerByName());
-                        break;
-                    case 4:
-                        setMenuManagement.displaySetMenu(setMenuDAO.getAllSetMenu());
-                        break;
-                    case 5:
-                        orderManagement.placeTable();
-                        break;
-                    case 6:
-                        orderManagement.updateOrder();
-                        break;
-                    case 7:
-                        customerDAO.save();
-                        System.out.println("Customer data has been successfully saved to “customer.txt”.");
-                        orderDAO.save();
-                        System.out.println("Order data has been successfully saved to “order.txt”.");
-                        break;
-                    case 8:
-                        displayCustomerOrOrder(customerDAO, customerManagement, orderDAO, orderManagement);
-                        break;
-                    default:
-                        System.out.println("Good bye");
-                        System.exit(0);
-                        break;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                continue;
+            }
+            switch (choice) {
+                case 1:
+                    customerManagement.addNewCustomer();
+                    break;
+                case 2:
+                    customerManagement.updateCustomer();
+                    break;
+                case 3:
+                    customerManagement.displayAllCustomers(customerManagement.findCustomerByName());
+                    break;
+                case 4:
+                    setMenuManagement.displaySetMenu(setMenuDAO.getAllSetMenu());
+                    break;
+                case 5:
+                    orderManagement.placeTable();
+                    break;
+                case 6:
+                    orderManagement.updateOrder();
+                    break;
+                case 7:
+                    customerDAO.save();
+                    System.out.println("Customer data has been successfully saved to “customer.txt”.");
+                    orderDAO.save();
+                    System.out.println("Order data has been successfully saved to “order.txt”.");
+                    break;
+                case 8:
+                    displayCustomerOrOrder(customerDAO, customerManagement, orderDAO, orderManagement);
+                    break;
+                default:
+                    System.out.println("Good bye");
+                    System.exit(0);
+                    break;
 
-                }
-            } while (true);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+            }
+        } while (true);
 
     }
 

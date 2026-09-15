@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class DataInput {
 
+    private static final Scanner scanner = new Scanner(System.in);
+
     public static int getInteger(String message) throws Exception {
         int number = 0;
         System.out.print(message);
@@ -38,8 +40,7 @@ public class DataInput {
 
     public static String getString() {
         String strInput;
-        Scanner sc = new Scanner(System.in);
-        strInput = sc.nextLine();
+        strInput = scanner.nextLine();
         if (strInput == null) {
             return null;
         }

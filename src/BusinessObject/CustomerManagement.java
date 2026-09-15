@@ -52,7 +52,7 @@ public class CustomerManagement {
     public void displayAllCustomers(List<Customer> customers) {
 
         if (customers == null || customers.isEmpty()) {
-            System.out.println("this customer list is empty");
+            System.out.println("No one matches the search criteria!");
             return;
         }
 
@@ -87,7 +87,7 @@ public class CustomerManagement {
             String id = DataNormalize.normalizeId(DataInput.getString("Enter customer id: "));
             Customer customer = customerDAO.findCustomerById(id);
             if (customer == null) {
-                System.out.println(">>The customer not found.");
+                System.out.println("This customer does not exist.");
                 return;
             }
 

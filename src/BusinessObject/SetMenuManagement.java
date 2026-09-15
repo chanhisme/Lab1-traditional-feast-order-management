@@ -26,9 +26,6 @@ public class SetMenuManagement {
         return number.replaceAll(NUMBER_REGEX, ",");
     }
 
-    public void displayOneMenu() {
-    }
-
     public void displaySetMenu(List <SetMenu> setMenuList) {
         if(setMenuList == null || setMenuList.isEmpty()){
             System.out.println("Cannot read data from feastMenu.txt. Please check it.");

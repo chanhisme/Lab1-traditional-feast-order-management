@@ -56,6 +56,7 @@ public class OrderManagement {
         System.out.println("----------------------------------------------------------------");
         System.out.printf("%-20s: %s\n", "Code of Set Menu", setMenu.getId());
         System.out.printf("%-20s: %s\n", "Set menu name", setMenu.getName());
+        System.out.printf("%-20s: %s\n", "Event date", order.getEventDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         System.out.printf("%-20s: %d\n", "Number of tables", order.getNumberOfTables());
         System.out.printf("%-20s: %s Vnd\n", "Set menu price", SetMenuManagement.formatNumber(setMenu.getPrice()));
 
@@ -246,7 +247,7 @@ public class OrderManagement {
 
     public void displayAllOrder(List<Order> orders) {
         if (orders == null || orders.isEmpty()) {
-            System.out.println("this order list is empty");
+            System.out.println("No data in the system.");
             return;
         }
         System.out.println("ID | Event date | Customer ID | Set Menu | Price | Tables | Cost");
@@ -266,7 +267,7 @@ public class OrderManagement {
 
     public void displayAllOrderWithSorted(List<Order> orders) {
         if (orders == null || orders.isEmpty()) {
-            System.out.println("this order list is empty");
+            System.out.println("No data in the system.");
             return;
         }
         orders.sort((o1, o2) -> {

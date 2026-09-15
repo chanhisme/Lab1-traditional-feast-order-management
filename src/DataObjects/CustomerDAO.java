@@ -54,26 +54,27 @@ public class CustomerDAO {
         return new ArrayList<>(customers.values());
     }
 
-    // public void updateCustomer(Customer customer) throws Exception {
-    // Customer cus = findCustomerById(customer.getId());
-    // if (cus != null) {
-    // cus.setName(customer.getName());
-    // cus.setPhone(customer.getPhone());
-    // cus.setEmail(customer.getEmail());
-    // }
-    // }
-
     public void load() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             reader.readLine();
             String line;
             while ((line = reader.readLine()) != null) {
-                String parts[] = line.split(", ");
-                String id = parts[0];
-                String name = parts[1];
-                String phone = parts[2];
-                String email = parts[3];
-                customers.put(id, new Customer(id, name, phone, email));
+                if (line.trim().isEmpty()) {
+                    continue;
+                }
+                String parts[] = line.split(",");
+                if (parts.length < 4) {
+                    continue;
+                }
+                String id = parts[0].trim();
+                String name = parts[1].trim();
+                String phone = parts[2].trim();
+                String email = parts[3].trim();
+                try {
+                    customers.put(id, new Customer(id, name, phone, email));
+                } catch (Exception e) {
+                    System.out.println("Skipped invalid customer line: " + line);
+                }
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

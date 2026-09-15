@@ -21,7 +21,7 @@ import java.util.Map;
 
     public class SetMenuDAO {
 
-        private final String PATH = "FeastMenu.txt";
+        private final String PATH = "feastMenu.txt";
         private final Map<String, SetMenu> setMenu;
 
         public SetMenuDAO(Map<String, SetMenu> setMenu) {
