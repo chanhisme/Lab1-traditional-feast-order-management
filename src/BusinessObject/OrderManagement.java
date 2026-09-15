@@ -250,6 +250,22 @@ public class OrderManagement {
             System.out.println("No data in the system.");
             return;
         }
+        printOrderTable(orders);
+    }
+
+    public void displayAllOrderWithSorted(List<Order> orders) {
+        if (orders == null || orders.isEmpty()) {
+            System.out.println("No data in the system.");
+            return;
+        }
+        orders.sort((o1, o2) -> {
+            return o1.getEventDate().compareTo(o2.getEventDate());
+        });
+
+        printOrderTable(orders);
+    }
+
+    private void printOrderTable(List<Order> orders) {
         System.out.println("ID | Event date | Customer ID | Set Menu | Price | Tables | Cost");
 
         for (Order order : orders) {
@@ -263,17 +279,5 @@ public class OrderManagement {
                     order.getNumberOfTables(),
                     order.getTotalCost());
         }
-    }
-
-    public void displayAllOrderWithSorted(List<Order> orders) {
-        if (orders == null || orders.isEmpty()) {
-            System.out.println("No data in the system.");
-            return;
-        }
-        orders.sort((o1, o2) -> {
-            return o1.getEventDate().compareTo(o2.getEventDate());
-        });
-
-        displayAllOrder(orders);
     }
 }

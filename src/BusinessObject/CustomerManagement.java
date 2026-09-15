@@ -49,13 +49,35 @@ public class CustomerManagement {
 
     }
 
-    public void displayAllCustomers(List<Customer> customers) {
-
+    public void displaySearchResult(List<Customer> customers) {
         if (customers == null || customers.isEmpty()) {
             System.out.println("No one matches the search criteria!");
             return;
         }
+        printCustomerTable(customers);
+    }
 
+    public void displayAllCustomers(List<Customer> customers) {
+
+        if (customers == null || customers.isEmpty()) {
+            System.out.println("No data in the system.");
+            return;
+        }
+        printCustomerTable(customers);
+    }
+
+    public void displayAllCustomersWithSorted(List<Customer> customers) {
+        if (customers == null || customers.isEmpty()) {
+            System.out.println("No data in the system.");
+            return;
+        }
+        customers.sort((c1, c2) -> {
+            return c1.getName().compareToIgnoreCase(c2.getName());
+        });
+        printCustomerTable(customers);
+    }
+
+    private void printCustomerTable(List<Customer> customers) {
         String rowFormat = "%-5s | %-20s | %-12s | %-25s%n";
         String line = "-----------------------------------------------------------------------";
         System.out.println(line);
@@ -69,17 +91,6 @@ public class CustomerManagement {
         }
 
         System.out.println(line);
-    }
-
-    public void displayAllCustomersWithSorted(List<Customer> customers) {
-        if (customers == null || customers.isEmpty()) {
-            displayAllCustomers(customers);
-            return;
-        }
-        customers.sort((c1, c2) -> {
-            return c1.getName().compareToIgnoreCase(c2.getName());
-        });
-        displayAllCustomers(customers);
     }
 
     public void updateCustomer() {
