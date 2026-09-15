@@ -96,9 +96,10 @@ public class OrderManagement {
             System.out.println("Please enter a number must be greater than zero");
             return;
         }
+        
 
         try {
-            eventDate = DataInput.getLocalDate("Enter event date: ");
+            eventDate = DataInput.getLocalDate("Enter event date (dd/MM/yyyy): ");
             if (!DataValidation.isFutureDate(eventDate)) {
                 throw new Exception("The date must be in the future");
             }
