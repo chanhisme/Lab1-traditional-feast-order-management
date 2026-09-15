@@ -96,7 +96,6 @@ public class OrderManagement {
             System.out.println("Please enter a number must be greater than zero");
             return;
         }
-        
 
         try {
             eventDate = DataInput.getLocalDate("Enter event date (dd/MM/yyyy): ");
@@ -116,7 +115,7 @@ public class OrderManagement {
 
         Order order = new Order(orderDAO.generateOrderId(), customerId, setMenuId, eventDate, numberOfTable);
         orderDAO.addOrder(order);
-        order.setTotalCost(setMenuDAO.findSetMenu(setMenuId).getPrice());
+        order.setTotalCost(setMenu.getPrice());
         displayOneOrder(order);
         orderDAO.save();
 
@@ -129,16 +128,16 @@ public class OrderManagement {
                 && order.getEventDate().equals(eventDate);
     }
 
-    //UPDATE METHOD
+    // UPDATE METHOD
     public void updateOrder() {
         String id = DataNormalize.normalizeId(DataInput.getString("Enter order id: "));
-        
+
         Order order = orderDAO.findOrderById(id);
         if (order == null) {
             System.out.println("This Order does not exist.");
             return;
         }
-        if(order.getEventDate().isBefore(LocalDate.now())){
+        if (order.getEventDate().isBefore(LocalDate.now())) {
             System.out.println("Cannot update the order in the past");
             return;
         }
@@ -179,7 +178,7 @@ public class OrderManagement {
         return true;
     }
 
-    //HELP METHOD FOR setNewOrder
+    // HELP METHOD FOR setNewOrder
     private String inputNewSetMenuId(Order order) {
         String input = DataInput.getString("Enter new set menu id (leave empty to keep current): ");
         if (input.isEmpty()) {
@@ -245,10 +244,8 @@ public class OrderManagement {
         return false;
     }
 
-
-    
     public void displayAllOrder(List<Order> orders) {
-        if(orders == null || orders.isEmpty()){
+        if (orders == null || orders.isEmpty()) {
             System.out.println("this order list is empty");
             return;
         }
@@ -263,13 +260,15 @@ public class OrderManagement {
                     order.getSetMenuId(),
                     setMenuDAO.findSetMenu(order.getSetMenuId()).getPrice(),
                     order.getNumberOfTables(),
-                    order.getTotalCost()
-            );
+                    order.getTotalCost());
         }
     }
 
     public void displayAllOrderWithSorted(List<Order> orders) {
-
+        if (orders == null || orders.isEmpty()) {
+            System.out.println("this order list is empty");
+            return;
+        }
         orders.sort((o1, o2) -> {
             return o1.getEventDate().compareTo(o2.getEventDate());
         });

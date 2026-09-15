@@ -1,7 +1,7 @@
-    /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+/*
+* Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+* Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+*/
 package BusinessObject;
 
 import DataObjects.CustomerDAO;
@@ -50,7 +50,7 @@ public class CustomerManagement {
     }
 
     public void displayAllCustomers(List<Customer> customers) {
-        
+
         if (customers == null || customers.isEmpty()) {
             System.out.println("this customer list is empty");
             return;
@@ -72,12 +72,16 @@ public class CustomerManagement {
     }
 
     public void displayAllCustomersWithSorted(List<Customer> customers) {
-        customers.sort( (c1, c2) -> {
+        if (customers == null || customers.isEmpty()) {
+            displayAllCustomers(customers);
+            return;
+        }
+        customers.sort((c1, c2) -> {
             return c1.getName().compareToIgnoreCase(c2.getName());
         });
         displayAllCustomers(customers);
     }
-    
+
     public void updateCustomer() {
         try {
             String id = DataNormalize.normalizeId(DataInput.getString("Enter customer id: "));
@@ -98,39 +102,39 @@ public class CustomerManagement {
     }
 
     public boolean setNewCustomer(Customer customer) {
-    String oldName = customer.getName();
-    String oldPhone = customer.getPhone();
-    String oldEmail = customer.getEmail();
-    boolean isSuccess = true;
-    
-    String nameInput = DataInput.getString("Enter new name: ");
-    String phoneInput = DataInput.getString("Enter new phone: ");
-    String emailInput = DataInput.getString("Enter new email: ");
+        String oldName = customer.getName();
+        String oldPhone = customer.getPhone();
+        String oldEmail = customer.getEmail();
+        boolean isSuccess = true;
 
-    try {
-        if (DataValidation.isNonEmptyString(nameInput)) {
-            customer.setName(nameInput);  
-        }
-        if (DataValidation.isNonEmptyString(phoneInput)) {
-            customer.setPhone(phoneInput); 
-        }
-        if (DataValidation.isNonEmptyString(emailInput)) {
-            customer.setEmail(emailInput);
-        }
-    } catch (Exception e) {
-        System.out.println(e.getMessage());
+        String nameInput = DataInput.getString("Enter new name: ");
+        String phoneInput = DataInput.getString("Enter new phone: ");
+        String emailInput = DataInput.getString("Enter new email: ");
 
         try {
-            customer.setName(oldName);
-            customer.setPhone(oldPhone);
-            customer.setEmail(oldEmail);
-        } catch (Exception restoreEx) {
-            System.out.println("Rollback failed: " + restoreEx.getMessage());
+            if (DataValidation.isNonEmptyString(nameInput)) {
+                customer.setName(nameInput);
+            }
+            if (DataValidation.isNonEmptyString(phoneInput)) {
+                customer.setPhone(phoneInput);
+            }
+            if (DataValidation.isNonEmptyString(emailInput)) {
+                customer.setEmail(emailInput);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+
+            try {
+                customer.setName(oldName);
+                customer.setPhone(oldPhone);
+                customer.setEmail(oldEmail);
+            } catch (Exception restoreEx) {
+                System.out.println("Rollback failed: " + restoreEx.getMessage());
+            }
+            isSuccess = false;
         }
-        isSuccess = false;
+        return isSuccess;
     }
-    return isSuccess; 
-}
 
     public ArrayList<Customer> findCustomerByName() {
         ArrayList<Customer> result = null;
