@@ -58,7 +58,7 @@ public class Program {
                         customerManagement.displayAllCustomers(customerManagement.findCustomerByName());
                         break;
                     case 4:
-                        setMenuManagement.displaySetMenu(setMenus);
+                        setMenuManagement.displaySetMenu(setMenuDAO.getAllSetMenu());
                         break;
                     case 5:
                         orderManagement.placeTable();

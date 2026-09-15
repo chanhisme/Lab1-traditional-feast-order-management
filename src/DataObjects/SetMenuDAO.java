@@ -4,6 +4,7 @@ import Entities.SetMenu;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -26,7 +27,9 @@ import java.util.Map;
         public SetMenuDAO(Map<String, SetMenu> setMenu) {
             this.setMenu = setMenu;
         }
-
+        public List <SetMenu> getAllSetMenu(){
+            return new ArrayList<>(setMenu.values());
+        }
         public void load() {
             try ( BufferedReader reader = new BufferedReader(new FileReader(PATH))) {
                 String line;

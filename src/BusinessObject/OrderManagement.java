@@ -131,10 +131,14 @@ public class OrderManagement {
     //UPDATE METHOD
     public void updateOrder() {
         String id = DataNormalize.normalizeId(DataInput.getString("Enter order id: "));
-
+        
         Order order = orderDAO.findOrderById(id);
         if (order == null) {
             System.out.println("This Order does not exist.");
+            return;
+        }
+        if(order.getEventDate().isBefore(LocalDate.now())){
+            System.out.println("Cannot update the order in the past");
             return;
         }
         if (setNewOrder(order)) {

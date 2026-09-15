@@ -7,7 +7,6 @@ package BusinessObject;
 import DataObjects.SetMenuDAO;
 import Entities.SetMenu;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -30,12 +29,20 @@ public class SetMenuManagement {
     public void displayOneMenu() {
     }
 
-    public void displaySetMenu(Map<String, SetMenu> setMenuMap) {
+    public void displaySetMenu(List <SetMenu> setMenuList) {
+        if(setMenuList == null || setMenuList.isEmpty()){
+            System.out.println("Cannot read data from feastMenu.txt. Please check it.");
+            return;
+        }
+        setMenuList.sort( (menu1, menu2) -> {
+           return Double.compare(menu1.getPrice(), menu2.getPrice());
+        });
+        
         System.out.println("-----------------------------------------------------------");
         System.out.println("List of Set Menus for ordering party:");
         System.out.println("-----------------------------------------------------------");
-        for (Map.Entry<String, SetMenu> entry : setMenuMap.entrySet()) {
-            SetMenu setMenu = entry.getValue();
+        for (SetMenu setMenu : setMenuList) {
+      
             System.out.printf("%-15s: %s\n", "Code", setMenu.getId());
             System.out.printf("%-15s: %s\n", "Name", setMenu.getName());
             System.out.printf("%-15s: %s\n", "Price", formatNumber(setMenu.getPrice()));
