@@ -11,9 +11,7 @@ import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Map;
-
 /**
  *
  * @author chanh
@@ -47,7 +45,6 @@ public class CustomerDAO {
                 result.add(customer);
             }
         }
-
         result.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
 
         return result;

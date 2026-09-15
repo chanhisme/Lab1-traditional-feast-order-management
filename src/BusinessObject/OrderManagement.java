@@ -14,6 +14,7 @@ import Utilities.DataInput;
 import Utilities.DataNormalize;
 import Utilities.DataValidation;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -127,6 +128,7 @@ public class OrderManagement {
                 && order.getEventDate().equals(eventDate);
     }
 
+    //UPDATE METHOD
     public void updateOrder() {
         String id = DataNormalize.normalizeId(DataInput.getString("Enter order id: "));
 
@@ -145,13 +147,19 @@ public class OrderManagement {
 
     public boolean setNewOrder(Order order) {
         String newSetMenuId = inputNewSetMenuId(order);
-        if (newSetMenuId == null) return false;
+        if (newSetMenuId == null) {
+            return false;
+        }
 
         int newNumberOfTables = inputNewNumberOfTables(order);
-        if (newNumberOfTables == -1) return false;
+        if (newNumberOfTables == -1) {
+            return false;
+        }
 
         LocalDate newEventDate = inputNewEventDate(order);
-        if (newEventDate == null) return false;
+        if (newEventDate == null) {
+            return false;
+        }
 
         if (hasDuplicateOrder(order, newSetMenuId, newEventDate)) {
             System.out.println("Duplicate data! This customer already ordered this menu on the selected date.");
@@ -166,6 +174,7 @@ public class OrderManagement {
         return true;
     }
 
+    //HELP METHOD FOR setNewOrder
     private String inputNewSetMenuId(Order order) {
         String input = DataInput.getString("Enter new set menu id (leave empty to keep current): ");
         if (input.isEmpty()) {
@@ -231,4 +240,51 @@ public class OrderManagement {
         return false;
     }
 
+    public void displayAllOrder(List<Order> orders) {
+        System.out.println("ID | Event date | Customer ID | Set Menu | Price | Tables | Cost");
+
+        for (Order order : orders) {
+            System.out.printf(
+                    "%-4s | %-10s | %-11s | %-8s | %,14.0f | %6d | %,12d%n",
+                    order.getOrderId(),
+                    order.getEventDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    order.getCustomerId(),
+                    order.getSetMenuId(),
+                    setMenuDAO.findSetMenu(order.getSetMenuId()).getPrice(),
+                    order.getNumberOfTables(),
+                    order.getTotalCost()
+            );
+        }
+    }
+
+    public void displayAllOrderWithSorted(List<Order> orders) {
+
+        orders.sort((o1, o2) -> {
+            return o1.getEventDate().compareTo(o2.getEventDate());
+        });
+
+        System.out.printf(
+                "%-4s | %-10s | %-11s | %-8s | %14s | %6s | %12s%n",
+                "ID",
+                "Event date",
+                "Customer ID",
+                "Set Menu",
+                "Price",
+                "Tables",
+                "Cost"
+        );
+
+        for (Order order : orders) {
+            System.out.printf(
+                    "%-4s | %-10s | %-11s | %-8s | %,14.0f | %6d | %,12d%n",
+                    order.getOrderId(),
+                    order.getEventDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    order.getCustomerId(),
+                    order.getSetMenuId(),
+                    setMenuDAO.findSetMenu(order.getSetMenuId()).getPrice(),
+                    order.getNumberOfTables(),
+                    order.getTotalCost()
+            );
+        }
+    }
 }
