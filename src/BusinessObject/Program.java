@@ -19,6 +19,7 @@ import java.util.List;
  */
 public class Program {
 
+    //--------------------------------------------------------------
     public static void main(String[] args) {
         Map<String, Customer> customers = new LinkedHashMap<>();
         CustomerDAO customerDAO = new CustomerDAO(customers);

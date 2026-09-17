@@ -7,6 +7,7 @@ import java.time.format.DateTimeParseException;
 public class DataValidation {
      public static DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+    //--------------------------------------------------------------
     public static boolean checkStringWithFormat(String id, String pattern) {
         boolean isValid = false;
         if (id.matches(pattern)) {
@@ -15,6 +16,7 @@ public class DataValidation {
         return isValid;
     }
 
+    //--------------------------------------------------------------
     public static boolean checkPositiveNumber(int number) {
         boolean isValid = false;
         if (number > 0) {
@@ -23,6 +25,7 @@ public class DataValidation {
         return isValid;
     }
 
+    //--------------------------------------------------------------
     public static boolean isNonEmptyString(String value) {
         boolean result = true;
         if (value == null || value.isEmpty()) {
@@ -31,6 +34,7 @@ public class DataValidation {
         return result;
     }
 
+    //--------------------------------------------------------------
     public static boolean checkDate(String input) {
         try {
             LocalDate.parse(input, DATE_FORMATTER);
@@ -40,6 +44,7 @@ public class DataValidation {
         }
     }
 
+    //--------------------------------------------------------------
     public static boolean isFutureDate(LocalDate eventDate) {
         boolean isValid = false;
         if (eventDate.isAfter(LocalDate.now())) {

@@ -7,6 +7,7 @@ public class DataInput {
 
     private static final Scanner scanner = new Scanner(System.in);
 
+    //--------------------------------------------------------------
     public static int getInteger(String message) throws Exception {
         int number = 0;
         System.out.print(message);
@@ -14,6 +15,7 @@ public class DataInput {
         return number;
     }
 
+    //--------------------------------------------------------------
     public static int getInteger() throws Exception {
         int number = 0;
         String strInput;
@@ -31,6 +33,7 @@ public class DataInput {
         return number;
     }
 
+    //--------------------------------------------------------------
     public static String getString(String displayMessage) {
         String strInput;
         System.out.print(displayMessage);
@@ -38,6 +41,7 @@ public class DataInput {
         return strInput;
     }
 
+    //--------------------------------------------------------------
     public static String getString() {
         String strInput;
         strInput = scanner.nextLine();
@@ -47,6 +51,7 @@ public class DataInput {
         return strInput.trim();
     }
 
+    //--------------------------------------------------------------
     public static int getPositiveIntNumber(String message) throws Exception {
         System.out.print(message);
         int number = getInteger();
@@ -56,6 +61,7 @@ public class DataInput {
         return number;
     }
 
+    //--------------------------------------------------------------
     public static LocalDate getLocalDate(String message) throws Exception {
         System.out.print(message);
         String date = DataNormalize.normalizeDate(getString());

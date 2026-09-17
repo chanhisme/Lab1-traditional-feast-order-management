@@ -29,14 +29,17 @@ public class OrderDAO {
             = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     
+    //--------------------------------------------------------------
     public OrderDAO(Map<String, Order> orderMap) {
         this.orderMap = orderMap;
     }
 
+    //--------------------------------------------------------------
     public ArrayList<Order> getAllOrders() {
         return new ArrayList<>(orderMap.values());
     }
 
+    //--------------------------------------------------------------
     public void save() {
         try ( BufferedWriter writer = new BufferedWriter(new FileWriter(PATH))) {
             writer.write(HEADER);
@@ -57,6 +60,7 @@ public class OrderDAO {
         }
     }
 
+    //--------------------------------------------------------------
     public void load() {
         try ( BufferedReader reader = new BufferedReader(new FileReader(PATH))) {
             reader.readLine();
@@ -79,10 +83,12 @@ public class OrderDAO {
         }
     }
 
+    //--------------------------------------------------------------
     public void addOrder(Order order) {
         orderMap.put(order.getOrderId(), order);
     }
 
+    //--------------------------------------------------------------
     public String generateOrderId() {
         int id = 1;
 
@@ -93,7 +99,9 @@ public class OrderDAO {
         return String.valueOf(id);
     }
 
+    //--------------------------------------------------------------
     public Order findOrderById(String id) {
         return orderMap.get(id);
     }
+ 
 }

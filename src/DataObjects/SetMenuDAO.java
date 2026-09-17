@@ -24,12 +24,15 @@ import java.util.Map;
         private final String PATH = "feastMenu.txt";
         private final Map<String, SetMenu> setMenu;
 
+    //--------------------------------------------------------------
         public SetMenuDAO(Map<String, SetMenu> setMenu) {
             this.setMenu = setMenu;
         }
+    //--------------------------------------------------------------
         public List <SetMenu> getAllSetMenu(){
             return new ArrayList<>(setMenu.values());
         }
+    //--------------------------------------------------------------
         public void load() {
             try ( BufferedReader reader = new BufferedReader(new FileReader(PATH))) {
                 String line;
@@ -78,10 +81,12 @@ import java.util.Map;
             }
         }
 
+    //--------------------------------------------------------------
         public void save() {
 
         }
 
+    //--------------------------------------------------------------
         public SetMenu findSetMenu(String id){
             return setMenu.get(id);
         }

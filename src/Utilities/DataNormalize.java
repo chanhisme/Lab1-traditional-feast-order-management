@@ -2,6 +2,7 @@ package Utilities;
 
 public class DataNormalize {
 
+    //--------------------------------------------------------------
     public static String normalizeId(String id) {
         if (id == null) {
             return null;
@@ -16,6 +17,7 @@ public class DataNormalize {
         return name.trim().replaceAll("\\s+", " ");
     }
 
+    //--------------------------------------------------------------
     public static String normalizePhone(String input) {
         if (input == null) {
             return null;
@@ -23,6 +25,7 @@ public class DataNormalize {
         return input.replaceAll("\\s+", "");
     }
  
+    //--------------------------------------------------------------
     public static String normalizeEmail(String input) {
         if (input == null) {
             return null;
@@ -30,6 +33,7 @@ public class DataNormalize {
         return input.trim();
     }
 
+    //--------------------------------------------------------------
     public static String normalizeDate(String input) {
         if (input == null) {
             return null;

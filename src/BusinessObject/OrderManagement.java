@@ -27,12 +27,14 @@ public class OrderManagement {
     private final CustomerDAO customerDAO;
     private final SetMenuDAO setMenuDAO;
 
+    //--------------------------------------------------------------
     public OrderManagement(OrderDAO orderDAO, CustomerDAO customerDAO, SetMenuDAO setMenuDAO) {
         this.orderDAO = orderDAO;
         this.customerDAO = customerDAO;
         this.setMenuDAO = setMenuDAO;
     }
 
+    //--------------------------------------------------------------
     public void displayOneOrder(Order order) {
         Customer customer = customerDAO.findCustomerById(order.getCustomerId());
         if (customer == null) {
@@ -70,6 +72,7 @@ public class OrderManagement {
 
     }
 
+    //--------------------------------------------------------------
     public void placeTable() {
         List<Order> orders = orderDAO.getAllOrders();
 
@@ -122,6 +125,7 @@ public class OrderManagement {
 
     }
 
+    //--------------------------------------------------------------
     private boolean isDuplicateOrder(Order order, String customerId, String setMenuId, LocalDate eventDate) {
 
         return order.getCustomerId().equalsIgnoreCase(customerId)
@@ -130,6 +134,7 @@ public class OrderManagement {
     }
 
     // UPDATE METHOD
+    //--------------------------------------------------------------
     public void updateOrder() {
         String id = DataNormalize.normalizeId(DataInput.getString("Enter order id: "));
 
@@ -150,6 +155,7 @@ public class OrderManagement {
         }
     }
 
+    //--------------------------------------------------------------
     public boolean setNewOrder(Order order) {
         String newSetMenuId = inputNewSetMenuId(order);
         if (newSetMenuId == null) {
@@ -180,6 +186,7 @@ public class OrderManagement {
     }
 
     // HELP METHOD FOR setNewOrder
+    //--------------------------------------------------------------
     private String inputNewSetMenuId(Order order) {
         String input = DataInput.getString("Enter new set menu id (leave empty to keep current): ");
         if (input.isEmpty()) {
@@ -193,6 +200,7 @@ public class OrderManagement {
         return normalized;
     }
 
+    //--------------------------------------------------------------
     private int inputNewNumberOfTables(Order order) {
         String input = DataInput.getString("Enter new number of tables (leave empty to keep current): ");
         if (input.isEmpty()) {
@@ -213,6 +221,7 @@ public class OrderManagement {
         }
     }
 
+    //--------------------------------------------------------------
     private LocalDate inputNewEventDate(Order order) {
         String input = DataInput.getString("Enter new event date (leave empty to keep current): ");
         if (input.isEmpty()) {
@@ -234,6 +243,7 @@ public class OrderManagement {
         }
     }
 
+    //--------------------------------------------------------------
     private boolean hasDuplicateOrder(Order current, String menuId, LocalDate date) {
         for (Order other : orderDAO.getAllOrders()) {
             if (!other.getOrderId().equalsIgnoreCase(current.getOrderId())) {
@@ -245,6 +255,7 @@ public class OrderManagement {
         return false;
     }
 
+    //--------------------------------------------------------------
     public void displayAllOrder(List<Order> orders) {
         if (orders == null || orders.isEmpty()) {
             System.out.println("No data in the system.");
@@ -253,6 +264,7 @@ public class OrderManagement {
         printOrderTable(orders);
     }
 
+    //--------------------------------------------------------------
     public void displayAllOrderWithSorted(List<Order> orders) {
         if (orders == null || orders.isEmpty()) {
             System.out.println("No data in the system.");
@@ -265,6 +277,7 @@ public class OrderManagement {
         printOrderTable(orders);
     }
 
+    //--------------------------------------------------------------
     private void printOrderTable(List<Order> orders) {
         System.out.printf("%-4s | %-10s | %-11s | %-8s | %14s | %6s | %12s\n",
                          "ID", "Event date", "Customer ID", "Set Menu", "Price", "Tables", "Cost");

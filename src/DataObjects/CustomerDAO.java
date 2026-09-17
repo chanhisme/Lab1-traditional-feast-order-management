@@ -21,18 +21,22 @@ public class CustomerDAO {
     private final String FILE_NAME = "customer.txt";
     private final Map<String, Customer> customers;
 
+    //--------------------------------------------------------------
     public CustomerDAO(Map<String, Customer> customers) {
         this.customers = customers;
     }
 
+    //--------------------------------------------------------------
     public void addCustomer(Customer customer) {
         customers.put(customer.getId(), customer);
     }
 
+    //--------------------------------------------------------------
     public Customer findCustomerById(String id) {
         return customers.get(id);
     }
 
+    //--------------------------------------------------------------
     public ArrayList<Customer> findCustomerByName(String targetName) {
         ArrayList<Customer> result = new ArrayList<>();
 
@@ -50,10 +54,12 @@ public class CustomerDAO {
         return result;
     }
 
+    //--------------------------------------------------------------
     public ArrayList<Customer> getAllCustomers() {
         return new ArrayList<>(customers.values());
     }
 
+    //--------------------------------------------------------------
     public void load() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             reader.readLine();
@@ -81,6 +87,7 @@ public class CustomerDAO {
         }
     }
 
+    //--------------------------------------------------------------
     public void save() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
             writer.write("Id, name, phone, email");

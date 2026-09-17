@@ -17,15 +17,18 @@ public class SetMenuManagement {
     private static final String NUMBER_REGEX = "(?<=\\d)(?=(\\d{3})+$)";
     private final SetMenuDAO setMenuDAO;
 
+    //--------------------------------------------------------------
     public SetMenuManagement(SetMenuDAO setMenuDAO) {
         this.setMenuDAO = setMenuDAO;
     }
 
+    //--------------------------------------------------------------
     public static String formatNumber(double price) {
         String number = String.valueOf((long) price);
         return number.replaceAll(NUMBER_REGEX, ",");
     }
 
+    //--------------------------------------------------------------
     public void displaySetMenu(List <SetMenu> setMenuList) {
         if(setMenuList == null || setMenuList.isEmpty()){
             System.out.println("Cannot read data from feastMenu.txt. Please check it.");
@@ -53,6 +56,7 @@ public class SetMenuManagement {
         }
     }
 
+    //--------------------------------------------------------------
     public static void displayDish(String title, List<String> dishes) {
         if (dishes == null || dishes.isEmpty()) {
             return;
