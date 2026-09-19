@@ -64,55 +64,86 @@ public class OrderManagement {
     }
 
     public void placeTable() {
-        List<Order> orders = orderDAO.getAllOrders();
-
-        LocalDate eventDate = null;
-        int numberOfTable = 0;
-
-        String customerId = DataNormalize.normalizeId(DataInput.getString("Enter customer id: "));
-        Customer customer = customerDAO.findCustomerById(customerId);
-        if (customer == null) {
-            System.out.println("Customer not found");
+        String customerId = inputCustomerIdForPlace();
+        if (customerId == null) {
             return;
         }
 
-        String setMenuId = DataNormalize.normalizeId(DataInput.getString("Enter set menu id: "));
+        String setMenuId = inputSetMenuIdForPlace();
+        if (setMenuId == null) {
+            return;
+        }
+
+        Integer numberOfTables = inputNumberOfTablesForPlace();
+        if (numberOfTables == null) {
+            return;
+        }
+
+        LocalDate eventDate = inputEventDateForPlace();
+        if (eventDate == null) {
+            return;
+        }
+
+        if (hasDuplicateForPlace(customerId, setMenuId, eventDate)) {
+            System.out.println("Dupplicate data!");
+            return;
+        }
+
         SetMenu setMenu = setMenuDAO.findSetMenu(setMenuId);
-        if (setMenu == null) {
-            System.out.println("Set Menu not found");
-            return;
-        }
-
-        try {
-            numberOfTable = DataInput.getPositiveIntNumber("Enter the number of tables: ");
-
-        } catch (Exception e) {
-            System.out.println("Please enter a number must be greater than zero");
-            return;
-        }
-
-        try {
-            eventDate = DataInput.getLocalDate("Enter event date (dd/MM/yyyy): ");
-            if (!DataValidation.isFutureDate(eventDate)) {
-                throw new Exception("The date must be in the future");
-            }
-        } catch (Exception e) {
-            System.out.println("Please enter a valid event date");
-            return;
-        }
-        for (Order order : orders) {
-            if (isDuplicateOrder(order, customerId, setMenuId, eventDate)) {
-                System.out.println("Dupplicate data!");
-                return;
-            }
-        }
-
-        Order order = new Order(orderDAO.generateOrderId(), customerId, setMenuId, eventDate, numberOfTable);
+        Order order = new Order(orderDAO.generateOrderId(), customerId, setMenuId, eventDate, numberOfTables);
         orderDAO.addOrder(order);
         order.setTotalCost(setMenu.getPrice());
         displayOneOrder(order);
         orderDAO.save();
+    }
 
+    private String inputCustomerIdForPlace() {
+        String customerId = DataNormalize.normalizeId(DataInput.getString("Enter customer id: "));
+        if (customerDAO.findCustomerById(customerId) == null) {
+            System.out.println("Customer not found");
+            return null;
+        }
+        return customerId;
+    }
+
+    private String inputSetMenuIdForPlace() {
+        String setMenuId = DataNormalize.normalizeId(DataInput.getString("Enter set menu id: "));
+        if (setMenuDAO.findSetMenu(setMenuId) == null) {
+            System.out.println("Set Menu not found");
+            return null;
+        }
+        return setMenuId;
+    }
+
+    private Integer inputNumberOfTablesForPlace() {
+        try {
+            return DataInput.getPositiveIntNumber("Enter the number of tables: ");
+        } catch (Exception e) {
+            System.out.println("Please enter a number must be greater than zero");
+            return null;
+        }
+    }
+
+    private LocalDate inputEventDateForPlace() {
+        try {
+            LocalDate eventDate = DataInput.getLocalDate("Enter event date (dd/MM/yyyy): ");
+            if (!DataValidation.isFutureDate(eventDate)) {
+                throw new Exception("The date must be in the future");
+            }
+            return eventDate;
+        } catch (Exception e) {
+            System.out.println("Please enter a valid event date");
+            return null;
+        }
+    }
+
+    private boolean hasDuplicateForPlace(String customerId, String setMenuId, LocalDate eventDate) {
+        for (Order order : orderDAO.getAllOrders()) {
+            if (isDuplicateOrder(order, customerId, setMenuId, eventDate)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean isDuplicateOrder(Order order, String customerId, String setMenuId, LocalDate eventDate) {
@@ -258,7 +289,7 @@ public class OrderManagement {
 
     private void printOrderTable(List<Order> orders) {
         System.out.printf("%-4s | %-10s | %-11s | %-8s | %14s | %6s | %12s\n",
-                         "ID", "Event date", "Customer ID", "Set Menu", "Price", "Tables", "Cost");
+                "ID", "Event date", "Customer ID", "Set Menu", "Price", "Tables", "Cost");
 
         for (Order order : orders) {
             System.out.printf(

@@ -25,7 +25,7 @@ public class SetMenuDAO {
     }
 
     public void load() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(PATH))) {
+        try ( BufferedReader reader = new BufferedReader(new FileReader(PATH))) {
             String line;
             reader.readLine();
 
@@ -54,12 +54,15 @@ public class SetMenuDAO {
                     if (category.startsWith(Constants.PREFIX_APPETIZER)) {
                         String dishes = category.substring(Constants.PREFIX_APPETIZER.length()).trim();
                         ingredients.put(Constants.CATEGORY_APPETIZER, Arrays.asList(dishes.split(";")));
+
                     } else if (category.startsWith(Constants.PREFIX_MAIN)) {
                         String dishes = category.substring(Constants.PREFIX_MAIN.length()).trim();
                         ingredients.put(Constants.CATEGORY_MAIN, Arrays.asList(dishes.split(";")));
+
                     } else if (category.startsWith(Constants.PREFIX_DESSERT)) {
                         String dishes = category.substring(Constants.PREFIX_DESSERT.length()).trim();
                         ingredients.put(Constants.CATEGORY_DESSERT, Arrays.asList(dishes.split(";")));
+
                     }
                 }
 
