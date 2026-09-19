@@ -63,10 +63,9 @@ public class CustomerManagement {
             System.out.println("No data in the system.");
             return;
         }
-        customers.sort((c1, c2) -> {
-            return c1.getName().compareToIgnoreCase(c2.getName());
-        });
-        printCustomerTable(customers);
+        List<Customer> sorted = new ArrayList<>(customers);
+        sorted.sort((c1, c2) -> c1.getName().compareToIgnoreCase(c2.getName()));
+        printCustomerTable(sorted);
     }
 
     private void printCustomerTable(List<Customer> customers) {

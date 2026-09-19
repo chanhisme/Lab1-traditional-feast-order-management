@@ -11,7 +11,7 @@ import Utilities.DataNormalize;
 import Utilities.Constants;
 import Utilities.DataValidation;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderManagement {
@@ -280,11 +280,9 @@ public class OrderManagement {
             System.out.println("No data in the system.");
             return;
         }
-        orders.sort((o1, o2) -> {
-            return o1.getEventDate().compareTo(o2.getEventDate());
-        });
-
-        printOrderTable(orders);
+        List<Order> sorted = new ArrayList<>(orders);
+        sorted.sort((o1, o2) -> o1.getEventDate().compareTo(o2.getEventDate()));
+        printOrderTable(sorted);
     }
 
     private void printOrderTable(List<Order> orders) {

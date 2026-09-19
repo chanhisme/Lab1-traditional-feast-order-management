@@ -3,6 +3,7 @@ package BusinessObject;
 import DataObjects.SetMenuDAO;
 import Utilities.Constants;
 import Entities.SetMenu;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SetMenuManagement {
@@ -19,19 +20,18 @@ public class SetMenuManagement {
         return number.replaceAll(NUMBER_REGEX, ",");
     }
 
-    public void displaySetMenu(List <SetMenu> setMenuList) {
-        if(setMenuList == null || setMenuList.isEmpty()){
+    public void displaySetMenu(List<SetMenu> setMenuList) {
+        if (setMenuList == null || setMenuList.isEmpty()) {
             System.out.println("Cannot read data from " + Constants.FILE_FEAST_MENU + ". Please check it.");
             return;
         }
-        setMenuList.sort( (menu1, menu2) -> {
-           return Double.compare(menu1.getPrice(), menu2.getPrice());
-        });
-        
+        List<SetMenu> sorted = new ArrayList<>(setMenuList);
+        sorted.sort((menu1, menu2) -> Double.compare(menu1.getPrice(), menu2.getPrice()));
+
         System.out.println("-----------------------------------------------------------");
         System.out.println("List of Set Menus for ordering party:");
         System.out.println("-----------------------------------------------------------");
-        for (SetMenu setMenu : setMenuList) {
+        for (SetMenu setMenu : sorted) {
       
             System.out.printf("%-15s: %s\n", "Code", setMenu.getId());
             System.out.printf("%-15s: %s\n", "Name", setMenu.getName());
