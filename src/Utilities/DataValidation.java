@@ -2,10 +2,11 @@ package Utilities;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
 import java.time.format.DateTimeParseException;
 
 public class DataValidation {
-     public static DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+     public static final DateTimeFormatter DATE_FORMATTER = Constants.DATE_FORMATTER;
 
     public static boolean checkStringWithFormat(String id, String pattern) {
         boolean isValid = false;

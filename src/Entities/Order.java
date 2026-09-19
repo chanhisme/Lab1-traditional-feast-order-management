@@ -1,5 +1,6 @@
 package Entities;
 import java.time.LocalDate;
+import Utilities.Constants;
 import java.time.format.DateTimeFormatter;
 
 public class Order {
@@ -11,8 +12,7 @@ public class Order {
     private int numberOfTables;
     private long totalCost;
 
-    private static final DateTimeFormatter DATE_FORMATTER =
-            DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter DATE_FORMATTER = Constants.DATE_FORMATTER;
     public Order(String orderId, String customerId, String setMenuId,
                  LocalDate eventDate, int numberOfTables) {
         this.orderId = orderId;

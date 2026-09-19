@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
+import Utilities.Constants;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Map;
@@ -15,10 +16,9 @@ import java.util.Map;
 public class OrderDAO {
 
     private final Map<String, Order> orderMap;
-    private final String PATH = "order.txt";
+    private static final String PATH = Constants.FILE_ORDER;
     private static final String HEADER = "OrderID,CustomerID,SetMenuID,EventDate,NumberOfTables,TotalCost";
-    private static final DateTimeFormatter DATE_FORMATTER
-            = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter DATE_FORMATTER = Constants.DATE_FORMATTER;
 
     
     public OrderDAO(Map<String, Order> orderMap) {

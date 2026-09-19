@@ -1,6 +1,7 @@
 package BusinessObject;
 
 import DataObjects.SetMenuDAO;
+import Utilities.Constants;
 import Entities.SetMenu;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class SetMenuManagement {
 
     public void displaySetMenu(List <SetMenu> setMenuList) {
         if(setMenuList == null || setMenuList.isEmpty()){
-            System.out.println("Cannot read data from feastMenu.txt. Please check it.");
+            System.out.println("Cannot read data from " + Constants.FILE_FEAST_MENU + ". Please check it.");
             return;
         }
         setMenuList.sort( (menu1, menu2) -> {
@@ -37,9 +38,9 @@ public class SetMenuManagement {
             System.out.printf("%-15s: %s\n", "Price", formatNumber(setMenu.getPrice()));
             System.out.printf("%-15s:\n", "Ingredient");
 
-            displayDish("+ Khai vị: ", setMenu.getIngredients().get("Khai vị"));
-            displayDish("+ Món chính: ", setMenu.getIngredients().get("Món chính"));
-            displayDish("+ Tráng miệng: ", setMenu.getIngredients().get("Tráng miệng"));
+            displayDish(Constants.PREFIX_APPETIZER + " ", setMenu.getIngredients().get(Constants.CATEGORY_APPETIZER));
+            displayDish(Constants.PREFIX_MAIN + " ", setMenu.getIngredients().get(Constants.CATEGORY_MAIN));
+            displayDish(Constants.PREFIX_DESSERT + " ", setMenu.getIngredients().get(Constants.CATEGORY_DESSERT));
 
             System.out.println("\n----------------------------------------------------------");
         }

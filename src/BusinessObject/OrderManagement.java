@@ -8,6 +8,7 @@ import Entities.Order;
 import Entities.SetMenu;
 import Utilities.DataInput;
 import Utilities.DataNormalize;
+import Utilities.Constants;
 import Utilities.DataValidation;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -48,13 +49,13 @@ public class OrderManagement {
         System.out.println("----------------------------------------------------------------");
         System.out.printf("%-20s: %s\n", "Code of Set Menu", setMenu.getId());
         System.out.printf("%-20s: %s\n", "Set menu name", setMenu.getName());
-        System.out.printf("%-20s: %s\n", "Event date", order.getEventDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        System.out.printf("%-20s: %s\n", "Event date", order.getEventDate().format(Constants.DATE_FORMATTER));
         System.out.printf("%-20s: %d\n", "Number of tables", order.getNumberOfTables());
         System.out.printf("%-20s: %s Vnd\n", "Set menu price", SetMenuManagement.formatNumber(setMenu.getPrice()));
 
-        SetMenuManagement.displayDish("+ Khai vị: ", setMenu.getIngredients().get("Khai vị"));
-        SetMenuManagement.displayDish("+ Món chính: ", setMenu.getIngredients().get("Món chính"));
-        SetMenuManagement.displayDish("+ Tráng miệng: ", setMenu.getIngredients().get("Tráng miệng"));
+        SetMenuManagement.displayDish(Constants.PREFIX_APPETIZER + " ", setMenu.getIngredients().get(Constants.CATEGORY_APPETIZER));
+        SetMenuManagement.displayDish(Constants.PREFIX_MAIN + " ", setMenu.getIngredients().get(Constants.CATEGORY_MAIN));
+        SetMenuManagement.displayDish(Constants.PREFIX_DESSERT + " ", setMenu.getIngredients().get(Constants.CATEGORY_DESSERT));
 
         System.out.println("\n----------------------------------------------------------------");
         System.out.printf("%-20s: %s Vnd\n", "Total cost", SetMenuManagement.formatNumber(order.getTotalCost()));
@@ -211,7 +212,7 @@ public class OrderManagement {
         try {
             String normalized = DataNormalize.normalizeDate(input);
             if (!DataValidation.checkDate(normalized)) {
-                throw new Exception("Date invalid. The format must be dd/MM/yyyy");
+                throw new Exception("Date invalid. The format must be " + Constants.DATE_PATTERN);
             }
             LocalDate date = LocalDate.parse(normalized, DataValidation.DATE_FORMATTER);
             if (!DataValidation.isFutureDate(date)) {
@@ -263,7 +264,7 @@ public class OrderManagement {
             System.out.printf(
                     "%-4s | %-10s | %-11s | %-8s | %,14.0f | %6d | %,12d\n",
                     order.getOrderId(),
-                    order.getEventDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                    order.getEventDate().format(Constants.DATE_FORMATTER),
                     order.getCustomerId(),
                     order.getSetMenuId(),
                     setMenuDAO.findSetMenu(order.getSetMenuId()).getPrice(),

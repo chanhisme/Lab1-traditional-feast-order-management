@@ -5,6 +5,7 @@ import DataObjects.OrderDAO;
 import Entities.Customer;
 import Entities.Order;
 import Utilities.Menu;
+import Utilities.Constants;
 import Utilities.DataInput;
 import java.util.LinkedHashMap;
 
@@ -67,9 +68,9 @@ public class Program {
                     break;
                 case 7:
                     customerDAO.save();
-                    System.out.println("Customer data has been successfully saved to “customer.txt”.");
+                    System.out.println("Customer data has been successfully saved to “" + Constants.FILE_CUSTOMER + "”.");
                     orderDAO.save();
-                    System.out.println("Order data has been successfully saved to “order.txt”.");
+                    System.out.println("Order data has been successfully saved to “" + Constants.FILE_ORDER + "”.");
                     break;
                 case 8:
                     displayCustomerOrOrder(customerDAO, customerManagement, orderDAO, orderManagement);

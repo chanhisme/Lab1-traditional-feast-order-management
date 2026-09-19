@@ -1,6 +1,7 @@
 package DataObjects;
 
 import Entities.Customer;
+import Utilities.Constants;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Map;
 public class CustomerDAO {
 
-    private final String FILE_NAME = "customer.txt";
+    private static final String FILE_NAME = Constants.FILE_CUSTOMER;
     private final Map<String, Customer> customers;
 
     public CustomerDAO(Map<String, Customer> customers) {
