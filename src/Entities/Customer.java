@@ -15,7 +15,6 @@ public class Customer {
     private String phone;
     private String email;
 
-    //--------------------------------------------------------------
     public Customer(String id, String name, String phone, String email) throws Exception {
         setId(id);
         setName(name);
@@ -23,12 +22,10 @@ public class Customer {
         setEmail(email);
     }
 
-    //--------------------------------------------------------------
     public String getId() {
         return id;
     }
 
-    //--------------------------------------------------------------
     public void setId(String id) throws Exception {
         if (id != null) {
             id = DataNormalize.normalizeId(id);
@@ -42,12 +39,10 @@ public class Customer {
         this.id = id;
     }
 
-    //--------------------------------------------------------------
     public String getName() {
         return name;
     }
 
-    //--------------------------------------------------------------
     public void setName(String name) throws Exception {
         if (name != null) {
             name = DataNormalize.normalizeString(name);
@@ -59,12 +54,10 @@ public class Customer {
         this.name = name;
     }
 
-    //--------------------------------------------------------------
     public String getPhone() {
         return phone;
     }
 
-    //--------------------------------------------------------------
     public void setPhone(String phone) throws Exception {
         if (phone != null) {
             phone = DataNormalize.normalizePhone(phone);
@@ -76,12 +69,10 @@ public class Customer {
         this.phone = phone;
     }
 
-    //--------------------------------------------------------------
     public String getEmail() {
         return email;
     }
 
-    //--------------------------------------------------------------
     public void setEmail(String email) throws Exception {
         if (email != null) {
             email = DataNormalize.normalizeEmail(email);
@@ -92,14 +83,12 @@ public class Customer {
         this.email = email;
     }
 
-    //--------------------------------------------------------------
     @Override
     public String toString() {
         return String.format("%-5s | %-20s | %-12s | %-25s",
                 id, formatDisplayName(name), phone, email);
     }
 
-    //--------------------------------------------------------------
     private static String formatDisplayName(String name) {
         String[] parts = name.trim().split("\\s+");
         if (parts.length < 2) {

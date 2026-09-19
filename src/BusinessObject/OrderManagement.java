@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package BusinessObject;
 
 import DataObjects.CustomerDAO;
@@ -17,24 +13,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-/**
- *
- * @author chanh
- */
 public class OrderManagement {
 
     private final OrderDAO orderDAO;
     private final CustomerDAO customerDAO;
     private final SetMenuDAO setMenuDAO;
 
-    //--------------------------------------------------------------
     public OrderManagement(OrderDAO orderDAO, CustomerDAO customerDAO, SetMenuDAO setMenuDAO) {
         this.orderDAO = orderDAO;
         this.customerDAO = customerDAO;
         this.setMenuDAO = setMenuDAO;
     }
 
-    //--------------------------------------------------------------
     public void displayOneOrder(Order order) {
         Customer customer = customerDAO.findCustomerById(order.getCustomerId());
         if (customer == null) {
@@ -62,9 +52,9 @@ public class OrderManagement {
         System.out.printf("%-20s: %d\n", "Number of tables", order.getNumberOfTables());
         System.out.printf("%-20s: %s Vnd\n", "Set menu price", SetMenuManagement.formatNumber(setMenu.getPrice()));
 
-        SetMenuManagement.displayDish("+ Khai vị: ", setMenu.getIngredient().get("Khai vị"));
-        SetMenuManagement.displayDish("+ Món chính: ", setMenu.getIngredient().get("Món chính"));
-        SetMenuManagement.displayDish("+ Tráng miệng: ", setMenu.getIngredient().get("Tráng miệng"));
+        SetMenuManagement.displayDish("+ Khai vị: ", setMenu.getIngredients().get("Khai vị"));
+        SetMenuManagement.displayDish("+ Món chính: ", setMenu.getIngredients().get("Món chính"));
+        SetMenuManagement.displayDish("+ Tráng miệng: ", setMenu.getIngredients().get("Tráng miệng"));
 
         System.out.println("\n----------------------------------------------------------------");
         System.out.printf("%-20s: %s Vnd\n", "Total cost", SetMenuManagement.formatNumber(order.getTotalCost()));
@@ -72,7 +62,6 @@ public class OrderManagement {
 
     }
 
-    //--------------------------------------------------------------
     public void placeTable() {
         List<Order> orders = orderDAO.getAllOrders();
 
@@ -125,7 +114,6 @@ public class OrderManagement {
 
     }
 
-    //--------------------------------------------------------------
     private boolean isDuplicateOrder(Order order, String customerId, String setMenuId, LocalDate eventDate) {
 
         return order.getCustomerId().equalsIgnoreCase(customerId)
@@ -133,8 +121,6 @@ public class OrderManagement {
                 && order.getEventDate().equals(eventDate);
     }
 
-    // UPDATE METHOD
-    //--------------------------------------------------------------
     public void updateOrder() {
         String id = DataNormalize.normalizeId(DataInput.getString("Enter order id: "));
 
@@ -155,7 +141,6 @@ public class OrderManagement {
         }
     }
 
-    //--------------------------------------------------------------
     public boolean setNewOrder(Order order) {
         String newSetMenuId = inputNewSetMenuId(order);
         if (newSetMenuId == null) {
@@ -185,8 +170,6 @@ public class OrderManagement {
         return true;
     }
 
-    // HELP METHOD FOR setNewOrder
-    //--------------------------------------------------------------
     private String inputNewSetMenuId(Order order) {
         String input = DataInput.getString("Enter new set menu id (leave empty to keep current): ");
         if (input.isEmpty()) {
@@ -200,7 +183,6 @@ public class OrderManagement {
         return normalized;
     }
 
-    //--------------------------------------------------------------
     private int inputNewNumberOfTables(Order order) {
         String input = DataInput.getString("Enter new number of tables (leave empty to keep current): ");
         if (input.isEmpty()) {
@@ -221,7 +203,6 @@ public class OrderManagement {
         }
     }
 
-    //--------------------------------------------------------------
     private LocalDate inputNewEventDate(Order order) {
         String input = DataInput.getString("Enter new event date (leave empty to keep current): ");
         if (input.isEmpty()) {
@@ -243,7 +224,6 @@ public class OrderManagement {
         }
     }
 
-    //--------------------------------------------------------------
     private boolean hasDuplicateOrder(Order current, String menuId, LocalDate date) {
         for (Order other : orderDAO.getAllOrders()) {
             if (!other.getOrderId().equalsIgnoreCase(current.getOrderId())) {
@@ -255,7 +235,6 @@ public class OrderManagement {
         return false;
     }
 
-    //--------------------------------------------------------------
     public void displayAllOrder(List<Order> orders) {
         if (orders == null || orders.isEmpty()) {
             System.out.println("No data in the system.");
@@ -264,7 +243,6 @@ public class OrderManagement {
         printOrderTable(orders);
     }
 
-    //--------------------------------------------------------------
     public void displayAllOrderWithSorted(List<Order> orders) {
         if (orders == null || orders.isEmpty()) {
             System.out.println("No data in the system.");
@@ -277,7 +255,6 @@ public class OrderManagement {
         printOrderTable(orders);
     }
 
-    //--------------------------------------------------------------
     private void printOrderTable(List<Order> orders) {
         System.out.printf("%-4s | %-10s | %-11s | %-8s | %14s | %6s | %12s\n",
                          "ID", "Event date", "Customer ID", "Set Menu", "Price", "Tables", "Cost");

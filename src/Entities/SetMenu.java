@@ -8,57 +8,57 @@ public class SetMenu {
     private String name;
     private double price;
 
-    private Map<String, List<String>> Ingredient;
+    private Map<String, List<String>> ingredients;
 
-    //--------------------------------------------------------------
-    public SetMenu(String id, String name, double price, Map<String, List<String>> Ingredient) {
+    public SetMenu(String id, String name, double price, Map<String, List<String>> ingredients) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.Ingredient = Ingredient;
+        this.ingredients = ingredients;
     }
 
-    //--------------------------------------------------------------
     public String getId() {
         return id;
     }
 
-    //--------------------------------------------------------------
     public void setId(String id) {
         this.id = id;
     }
 
-    //--------------------------------------------------------------
     public String getName() {
         return name;
     }
 
-    //--------------------------------------------------------------
     public void setName(String name) {
         this.name = name;
     }
 
-    //--------------------------------------------------------------
     public double getPrice() {
         return price;
     }
 
-    //--------------------------------------------------------------
     public void setPrice(double price) {
         this.price = price;
     }
 
-    //--------------------------------------------------------------
+    public Map<String, List<String>> getIngredients() {
+        return ingredients;
+    }
+
+    @Deprecated
     public Map<String, List<String>> getIngredient() {
-        return Ingredient;
+        return ingredients;
     }
 
-    //--------------------------------------------------------------
-    public void setIngredient(Map<String, List<String>> Ingredient) {
-        this.Ingredient = Ingredient;
+    public void setIngredients(Map<String, List<String>> ingredients) {
+        this.ingredients = ingredients;
     }
 
-    //--------------------------------------------------------------
+    @Deprecated
+    public void setIngredient(Map<String, List<String>> ingredients) {
+        this.ingredients = ingredients;
+    }
+
     @Override
     public String toString() {
         return String.format("Code: %s | Name: %s | Price: %.0f", id, name, price);

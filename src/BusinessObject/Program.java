@@ -13,13 +13,8 @@ import Entities.SetMenu;
 import DataObjects.SetMenuDAO;
 import java.util.List;
 
-/**
- *
- * @author chanh
- */
 public class Program {
 
-    //--------------------------------------------------------------
     public static void main(String[] args) {
         Map<String, Customer> customers = new LinkedHashMap<>();
         CustomerDAO customerDAO = new CustomerDAO(customers);
@@ -89,7 +84,7 @@ public class Program {
 
     }
 
-    private static void displayCustomerOrOrder( CustomerDAO customerDAO, CustomerManagement customerManagment,
+    private static void displayCustomerOrOrder(CustomerDAO customerDAO, CustomerManagement customerManagement,
             OrderDAO orderDAO, OrderManagement orderManagement) {
 
         int displayChoice;
@@ -113,7 +108,7 @@ public class Program {
                 return;
             }
 
-            customerManagment.displayAllCustomersWithSorted(customers);
+            customerManagement.displayAllCustomersWithSorted(customers);
 
         } else if (displayChoice == 2) {
             List<Order> orders = orderDAO.getAllOrders();

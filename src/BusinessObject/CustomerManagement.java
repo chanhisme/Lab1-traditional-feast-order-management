@@ -1,7 +1,3 @@
-/*
-* Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-* Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
-*/
 package BusinessObject;
 
 import DataObjects.CustomerDAO;
@@ -13,20 +9,14 @@ import Utilities.DataValidation;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author chanh
- */
 public class CustomerManagement {
 
     private final CustomerDAO customerDAO;
 
-    //--------------------------------------------------------------
     public CustomerManagement(CustomerDAO customerDAO) {
         this.customerDAO = customerDAO;
     }
 
-    //--------------------------------------------------------------
     public Customer inputCustomer() throws Exception {
         String id = DataInput.getString("Enter customer id: ");
         String name = DataInput.getString("Enter customer name: ");
@@ -35,7 +25,6 @@ public class CustomerManagement {
         return new Customer(id, name, phone, email);
     }
 
-    //--------------------------------------------------------------
     public void addNewCustomer() {
         try {
             Customer customer = inputCustomer();
@@ -52,7 +41,6 @@ public class CustomerManagement {
 
     }
 
-    //--------------------------------------------------------------
     public void displaySearchResult(List<Customer> customers) {
         if (customers == null || customers.isEmpty()) {
             System.out.println("No one matches the search criteria!");
@@ -61,7 +49,6 @@ public class CustomerManagement {
         printCustomerTable(customers);
     }
 
-    //--------------------------------------------------------------
     public void displayAllCustomers(List<Customer> customers) {
 
         if (customers == null || customers.isEmpty()) {
@@ -71,7 +58,6 @@ public class CustomerManagement {
         printCustomerTable(customers);
     }
 
-    //--------------------------------------------------------------
     public void displayAllCustomersWithSorted(List<Customer> customers) {
         if (customers == null || customers.isEmpty()) {
             System.out.println("No data in the system.");
@@ -83,7 +69,6 @@ public class CustomerManagement {
         printCustomerTable(customers);
     }
 
-    //--------------------------------------------------------------
     private void printCustomerTable(List<Customer> customers) {
         String rowFormat = "%-5s | %-20s | %-12s | %-25s%n";
         String line = "-----------------------------------------------------------------------";
@@ -98,7 +83,6 @@ public class CustomerManagement {
         System.out.println(line);
     }
 
-    //--------------------------------------------------------------
     public void updateCustomer() {
         try {
             String id = DataNormalize.normalizeId(DataInput.getString("Enter customer id: "));
@@ -118,7 +102,6 @@ public class CustomerManagement {
         }
     }
 
-    //--------------------------------------------------------------
     public boolean setNewCustomer(Customer customer) {
         String oldName = customer.getName();
         String oldPhone = customer.getPhone();
@@ -154,7 +137,6 @@ public class CustomerManagement {
         return isSuccess;
     }
 
-    //--------------------------------------------------------------
     public ArrayList<Customer> findCustomerByName() {
         ArrayList<Customer> result = null;
         String name = DataNormalize.normalizeString(DataInput.getString("Enter customer name: "));
@@ -164,7 +146,6 @@ public class CustomerManagement {
         return result;
     }
 
-    //--------------------------------------------------------------
     private String formatName(String name) {
         String[] parts = name.trim().split("\\s+");
 

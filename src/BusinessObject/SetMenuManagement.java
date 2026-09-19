@@ -1,34 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package BusinessObject;
 
 import DataObjects.SetMenuDAO;
 import Entities.SetMenu;
 import java.util.List;
 
-/**
- *
- * @author chanh
- */
 public class SetMenuManagement {
 
     private static final String NUMBER_REGEX = "(?<=\\d)(?=(\\d{3})+$)";
     private final SetMenuDAO setMenuDAO;
 
-    //--------------------------------------------------------------
     public SetMenuManagement(SetMenuDAO setMenuDAO) {
         this.setMenuDAO = setMenuDAO;
     }
 
-    //--------------------------------------------------------------
     public static String formatNumber(double price) {
         String number = String.valueOf((long) price);
         return number.replaceAll(NUMBER_REGEX, ",");
     }
 
-    //--------------------------------------------------------------
     public void displaySetMenu(List <SetMenu> setMenuList) {
         if(setMenuList == null || setMenuList.isEmpty()){
             System.out.println("Cannot read data from feastMenu.txt. Please check it.");
@@ -48,15 +37,14 @@ public class SetMenuManagement {
             System.out.printf("%-15s: %s\n", "Price", formatNumber(setMenu.getPrice()));
             System.out.printf("%-15s:\n", "Ingredient");
 
-            displayDish("+ Khai vị: ", setMenu.getIngredient().get("Khai vị"));
-            displayDish("+ Món chính: ", setMenu.getIngredient().get("Món chính"));
-            displayDish("+ Tráng miệng: ", setMenu.getIngredient().get("Tráng miệng"));
+            displayDish("+ Khai vị: ", setMenu.getIngredients().get("Khai vị"));
+            displayDish("+ Món chính: ", setMenu.getIngredients().get("Món chính"));
+            displayDish("+ Tráng miệng: ", setMenu.getIngredients().get("Tráng miệng"));
 
             System.out.println("\n----------------------------------------------------------");
         }
     }
 
-    //--------------------------------------------------------------
     public static void displayDish(String title, List<String> dishes) {
         if (dishes == null || dishes.isEmpty()) {
             return;

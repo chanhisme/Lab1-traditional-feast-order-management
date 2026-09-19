@@ -10,29 +10,17 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-/**
- *
- * @author chanh
- */
-
-    public class SetMenuDAO {
+public class SetMenuDAO {
 
         private final String PATH = "feastMenu.txt";
         private final Map<String, SetMenu> setMenu;
 
-    //--------------------------------------------------------------
         public SetMenuDAO(Map<String, SetMenu> setMenu) {
             this.setMenu = setMenu;
         }
-    //--------------------------------------------------------------
         public List <SetMenu> getAllSetMenu(){
             return new ArrayList<>(setMenu.values());
         }
-    //--------------------------------------------------------------
         public void load() {
             try ( BufferedReader reader = new BufferedReader(new FileReader(PATH))) {
                 String line;
@@ -81,12 +69,10 @@ import java.util.Map;
             }
         }
 
-    //--------------------------------------------------------------
         public void save() {
 
         }
 
-    //--------------------------------------------------------------
         public SetMenu findSetMenu(String id){
             return setMenu.get(id);
         }
