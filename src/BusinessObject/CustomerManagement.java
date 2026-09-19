@@ -145,25 +145,4 @@ public class CustomerManagement {
         }
         return result;
     }
-
-    private String formatName(String name) {
-        String[] parts = name.trim().split("\\s+");
-
-        if (parts.length < 2) {
-            return name;
-        }
-
-        String lastName = parts[parts.length - 1];
-
-        StringBuilder firstPart = new StringBuilder();
-
-        for (int i = 0; i < parts.length - 1; i++) {
-            if (i > 0) {
-                firstPart.append(" ");
-            }
-            firstPart.append(parts[i]);
-        }
-
-        return lastName + ", " + firstPart;
-    }
 }
