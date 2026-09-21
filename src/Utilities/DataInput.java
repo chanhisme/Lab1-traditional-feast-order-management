@@ -32,18 +32,16 @@ public class DataInput {
     }
 
     public static String getString(String displayMessage) {
-        String strInput;
+
         System.out.print(displayMessage);
-        strInput = getString();
+        String strInput = getString();
         return strInput;
     }
 
     public static String getString() {
-        String strInput;
-        strInput = scanner.nextLine();
-        if (strInput == null) {
-            return null;
-        }
+
+        String strInput = scanner.nextLine();
+
         return strInput.trim();
     }
 
