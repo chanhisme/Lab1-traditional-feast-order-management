@@ -2,13 +2,10 @@ package Entities;
 
 import Utilities.DataNormalize;
 import Utilities.DataValidation;
-
+import Utilities.Constants;
 public class Customer {
 
-    private static final String ID_REGEX = "^[CGK]\\d{4}$";
-    private static final String PHONE_REGEX = "^(03[2-9]|05[2568]|07[06789]|08[1-9]|09[0-9])\\d{7}$";
-    private static final String NAME_CUSTOMER_REGEX = "^(?=.{2,25}$)[A-Za-z]+(?: [A-Za-z]+)*$";
-    private static final String EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+
 
     private String id;
     private String name;
@@ -31,7 +28,7 @@ public class Customer {
             id = DataNormalize.normalizeId(id);
         }
 
-        if (id == null || !DataValidation.checkStringWithFormat(id, ID_REGEX)) {
+        if (id == null || !DataValidation.checkStringWithFormat(id, Constants.CUSTOMER_ID_REGEX)) {
             throw new Exception(
                     "Id invalid. The correct format: A unique 5-character string. The first character is “C”, “G”or “K”, followed by 4 digits");
         }
@@ -47,7 +44,7 @@ public class Customer {
         if (name != null) {
             name = DataNormalize.normalizeString(name);
         }
-        if (name == null || !DataValidation.checkStringWithFormat(name, NAME_CUSTOMER_REGEX)) {
+        if (name == null || !DataValidation.checkStringWithFormat(name, Constants.CUSTOMER_NAME_REGEX)) {
             throw new Exception(
                     "Name must be from 2 to 25 characters");
         }
@@ -62,7 +59,7 @@ public class Customer {
         if (phone != null) {
             phone = DataNormalize.normalizePhone(phone);
         }
-        if (phone == null || !DataValidation.checkStringWithFormat(phone, PHONE_REGEX)) {
+        if (phone == null || !DataValidation.checkStringWithFormat(phone, Constants.CUSTOMER_PHONE_REGEX)) {
             throw new Exception(
                     "Phone must be 10 digits and belonging to a network operator in VietNam.");
         }
@@ -77,7 +74,7 @@ public class Customer {
         if (email != null) {
             email = DataNormalize.normalizeEmail(email);
         }
-        if (email == null || !DataValidation.checkStringWithFormat(email, EMAIL_REGEX)) {
+        if (email == null || !DataValidation.checkStringWithFormat(email, Constants.CUSTOMER_EMAIL_REGEX)) {
             throw new Exception("Your mail is wrong format");
         }
         this.email = email;
