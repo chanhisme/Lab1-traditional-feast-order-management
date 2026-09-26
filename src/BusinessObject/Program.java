@@ -12,11 +12,20 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import Entities.SetMenu;
 import DataObjects.SetMenuDAO;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.List;
 
 public class Program {
 
     public static void main(String[] args) {
+        try {
+            System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, "UTF-8"));
+        } catch (java.io.UnsupportedEncodingException e) {
+            System.out.println("Warning: UTF-8 is not supported. Vietnamese characters may display incorrectly.");
+        }
+        
         Map<String, Customer> customers = new LinkedHashMap<>();
         CustomerDAO customerDAO = new CustomerDAO(customers);
         CustomerManagement customerManagement = new CustomerManagement(customerDAO);

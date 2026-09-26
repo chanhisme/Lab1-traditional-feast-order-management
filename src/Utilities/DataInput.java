@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class DataInput {
 
-    private static final Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in, "UTF-8");
 
     public static int getInteger(String message) throws Exception {
         int number = 0;
@@ -65,6 +65,14 @@ public class DataInput {
             throw new Exception("Date invalid.");
         }
         return LocalDate.parse(date, DataValidation.DATE_FORMATTER);
+    }
+    
+    public static int getIntegerMaxMin(int max, int min, String message) throws Exception{
+        int number = getInteger(message);
+        if(!DataValidation.isIntergerMaxMin(min, max, number)){
+            throw new Exception("the number is invalid");
+        }
+        return number;
     }
 
 }

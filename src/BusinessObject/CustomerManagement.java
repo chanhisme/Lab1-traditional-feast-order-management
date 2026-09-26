@@ -26,6 +26,8 @@ public class CustomerManagement {
     }
 
     public void addNewCustomer() {
+        int choice;
+
         try {
             Customer customer = inputCustomer();
             if (customerDAO.findCustomerById(customer.getId()) != null) {
@@ -34,6 +36,13 @@ public class CustomerManagement {
             }
             customerDAO.addCustomer(customer);
             customerDAO.save();
+            System.out.println("[1] Register new customer");
+            System.out.println("[2] Return menu");
+            choice = DataInput.getIntegerMaxMin(1,2,"Enter you choice: ");
+            if (choice == 2) {
+                return;
+            }
+            addNewCustomer();
 
         } catch (Exception e) {
             System.out.println(e.getMessage());

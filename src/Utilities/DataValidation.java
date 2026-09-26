@@ -48,5 +48,9 @@ public class DataValidation {
         }
         return isValid;
     }
+    
+    public static boolean isIntergerMaxMin(int min, int max, int number){
+        return (number >= min && number <= max);
+    }
 
 }

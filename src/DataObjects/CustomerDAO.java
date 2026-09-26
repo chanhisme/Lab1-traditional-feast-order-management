@@ -3,10 +3,13 @@ package DataObjects;
 import Entities.Customer;
 import Utilities.Constants;
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map;
 public class CustomerDAO {
@@ -48,7 +51,7 @@ public class CustomerDAO {
     }
 
     public void load() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(FILE_NAME), StandardCharsets.UTF_8))) {
             reader.readLine();
             String line;
             while ((line = reader.readLine()) != null) {
@@ -75,7 +78,7 @@ public class CustomerDAO {
     }
 
     public void save() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_NAME), StandardCharsets.UTF_8))) {
             writer.write("Id, name, phone, email");
             writer.newLine();
             for (Customer customer : customers.values()) {

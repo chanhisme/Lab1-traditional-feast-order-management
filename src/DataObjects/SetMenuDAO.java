@@ -3,8 +3,10 @@ package DataObjects;
 import Entities.SetMenu;
 import Utilities.Constants;
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -23,9 +25,10 @@ public class SetMenuDAO {
     public List<SetMenu> getAllSetMenu() {
         return new ArrayList<>(setMenu.values());
     }
+    
 
     public void load() {
-        try ( BufferedReader reader = new BufferedReader(new FileReader(PATH))) {
+        try ( BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(PATH), StandardCharsets.UTF_8))) {
             String line;
             reader.readLine();
 

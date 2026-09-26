@@ -4,9 +4,12 @@ import Entities.Order;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import Utilities.Constants;
 import java.time.format.DateTimeFormatter;
@@ -30,7 +33,7 @@ public class OrderDAO {
     }
 
     public void save() {
-        try ( BufferedWriter writer = new BufferedWriter(new FileWriter(PATH))) {
+        try ( BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(PATH), StandardCharsets.UTF_8))) {
             writer.write(HEADER);
             writer.newLine();
             for (Order order : orderMap.values()) {
@@ -50,7 +53,7 @@ public class OrderDAO {
     }
 
     public void load() {
-        try ( BufferedReader reader = new BufferedReader(new FileReader(PATH))) {
+        try ( BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(PATH), StandardCharsets.UTF_8))) {
             reader.readLine();
             String line;
             while ((line = reader.readLine()) != null) {
