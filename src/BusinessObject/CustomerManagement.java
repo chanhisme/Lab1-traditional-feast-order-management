@@ -26,28 +26,35 @@ public class CustomerManagement {
     }
 
     public void addNewCustomer() {
-        int choice;
-
-        try {
-            Customer customer = inputCustomer();
-            if (customerDAO.findCustomerById(customer.getId()) != null) {
-                System.out.println("Customer already exists!");
-                return;
+        while (true) {
+            try {
+                Customer customer = inputCustomer();
+                if (customerDAO.findCustomerById(customer.getId()) != null) {
+                    System.out.println("Customer already exists!");
+                    continue;
+                }
+                customerDAO.addCustomer(customer);
+                customerDAO.save();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                continue;
             }
-            customerDAO.addCustomer(customer);
-            customerDAO.save();
+
             System.out.println("[1] Register new customer");
             System.out.println("[2] Return menu");
-            choice = DataInput.getIntegerMaxMin(1,2,"Enter you choice: ");
+            int choice;
+            while (true) {
+                try {
+                    choice = DataInput.getIntegerMaxMin(1, 2, "Enter your choice: ");
+                    break;
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
             if (choice == 2) {
                 return;
             }
-            addNewCustomer();
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
-
     }
 
     public void displaySearchResult(List<Customer> customers) {
