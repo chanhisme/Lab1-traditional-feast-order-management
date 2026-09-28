@@ -3,12 +3,14 @@ package DataObjects;
 import Entities.SetMenu;
 import Utilities.Constants;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,19 +18,23 @@ import java.util.Map;
 public class SetMenuDAO {
 
     private static final String PATH = Constants.FILE_FEAST_MENU;
-    private final Map<String, SetMenu> setMenu;
+    private final Map<String, SetMenu> setMenus;
 
-    public SetMenuDAO(Map<String, SetMenu> setMenu) {
-        this.setMenu = setMenu;
+    public SetMenuDAO(Map<String, SetMenu> setMenus) {
+        this.setMenus = setMenus;
     }
 
     public List<SetMenu> getAllSetMenu() {
-        return new ArrayList<>(setMenu.values());
+        return new ArrayList<>(setMenus.values());
     }
-    
+
+    public void add(SetMenu setMenu) {
+        setMenus.put(setMenu.getId(), setMenu);
+    }
 
     public void load() {
-        try ( BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(PATH), StandardCharsets.UTF_8))) {
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(PATH), StandardCharsets.UTF_8))) {
             String line;
             reader.readLine();
 
@@ -56,21 +62,21 @@ public class SetMenuDAO {
 
                     if (category.startsWith(Constants.PREFIX_APPETIZER)) {
                         String dishes = category.substring(Constants.PREFIX_APPETIZER.length()).trim();
-                        ingredients.put(Constants.CATEGORY_APPETIZER, Arrays.asList(dishes.split(";")));
+                        ingredients.put(Constants.CATEGORY_APPETIZER, parseDishes(dishes));
 
                     } else if (category.startsWith(Constants.PREFIX_MAIN)) {
                         String dishes = category.substring(Constants.PREFIX_MAIN.length()).trim();
-                        ingredients.put(Constants.CATEGORY_MAIN, Arrays.asList(dishes.split(";")));
+                        ingredients.put(Constants.CATEGORY_MAIN, parseDishes(dishes));
 
                     } else if (category.startsWith(Constants.PREFIX_DESSERT)) {
                         String dishes = category.substring(Constants.PREFIX_DESSERT.length()).trim();
-                        ingredients.put(Constants.CATEGORY_DESSERT, Arrays.asList(dishes.split(";")));
+                        ingredients.put(Constants.CATEGORY_DESSERT, parseDishes(dishes));
 
                     }
                 }
 
                 SetMenu menu = new SetMenu(id, name, price, ingredients);
-                setMenu.put(id, menu);
+                setMenus.put(id, menu);
             }
         } catch (IOException | NumberFormatException e) {
             System.out.println(e.getMessage());
@@ -78,9 +84,64 @@ public class SetMenuDAO {
     }
 
     public void save() {
+        try (BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(PATH), StandardCharsets.UTF_8))) {
+            writer.write("Code,Name,Price,Ingredients");
+            writer.newLine();
+            for (SetMenu menu : setMenus.values()) {
+                String ingredients = Constants.PREFIX_APPETIZER + " "
+                        + String.join("; ",
+                                menu.getIngredients().getOrDefault(Constants.CATEGORY_APPETIZER, new ArrayList<>()))
+                        + "#" + Constants.PREFIX_MAIN + " "
+                        + String.join("; ",
+                                menu.getIngredients().getOrDefault(Constants.CATEGORY_MAIN, new ArrayList<>()))
+                        + "#" + Constants.PREFIX_DESSERT + " "
+                        + String.join("; ",
+                                menu.getIngredients().getOrDefault(Constants.CATEGORY_DESSERT, new ArrayList<>()));
+                writer.write(menu.getId() + "," + menu.getName() + "," + (long) menu.getPrice() + ",\"" + ingredients
+                        + "\"");
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static List<String> parseDishes(String dishes) {
+        List<String> dishList = new ArrayList<>();
+        for (String d : dishes.split(";")) {
+            String t = d.trim();
+            if (!t.isEmpty()) {
+                dishList.add(t);
+            }
+        }
+        return dishList;
     }
 
     public SetMenu findSetMenu(String id) {
-        return setMenu.get(id);
+        return setMenus.get(id);
     }
+
+    // public ArrayList<SetMenu> findSetMenuByDish(String dish) {
+    // dish = dish.trim().toLowerCase();
+    // ArrayList<SetMenu> res = new ArrayList<>();
+    // for (SetMenu menu : getAllSetMenu()) {
+    // if (containsDish(menu, dish)) {
+    // res.add(menu);
+    // }
+    // }
+    // return res;
+    // }
+
+    // private boolean containsDish(SetMenu menu, String dish) {
+    // for (List<String> dishes : menu.getIngredients().values()) {
+    // for (String d : dishes) {
+    // if (d.toLowerCase().contains(dish)) {
+    // return true;
+    // }
+    // }
+    // }
+    // return false;
+    // }
+
 }

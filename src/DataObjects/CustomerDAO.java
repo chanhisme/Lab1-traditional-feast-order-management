@@ -12,6 +12,7 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Map;
+
 public class CustomerDAO {
 
     private static final String FILE_NAME = Constants.FILE_CUSTOMER;
@@ -51,7 +52,8 @@ public class CustomerDAO {
     }
 
     public void load() {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(FILE_NAME), StandardCharsets.UTF_8))) {
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(new FileInputStream(FILE_NAME), StandardCharsets.UTF_8))) {
             reader.readLine();
             String line;
             while ((line = reader.readLine()) != null) {
@@ -78,7 +80,8 @@ public class CustomerDAO {
     }
 
     public void save() {
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILE_NAME), StandardCharsets.UTF_8))) {
+        try (BufferedWriter writer = new BufferedWriter(
+                new OutputStreamWriter(new FileOutputStream(FILE_NAME), StandardCharsets.UTF_8))) {
             writer.write("Id, name, phone, email");
             writer.newLine();
             for (Customer customer : customers.values()) {

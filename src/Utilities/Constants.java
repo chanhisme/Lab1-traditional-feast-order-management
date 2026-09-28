@@ -20,7 +20,7 @@ public class Constants {
     public static final String FILE_FEAST_MENU = "feastMenu.txt";
 
     public static final String CUSTOMER_ID_REGEX = "^[CGK]\\d{4}$";
-    public static final String CUSTOMER_PHONE_REGEX = "^(03[2-9]|05[2568]|07[06789]|08[1-9]|09[0-9])\\d{7}$";
+    public static final String CUSTOMER_PHONE_REGEX = "^0\\d{9}$";
     public static final String CUSTOMER_NAME_REGEX = "^(?=.{2,25}$)\\p{L}+(?: \\p{L}+)*$";
     public static final String CUSTOMER_EMAIL_REGEX = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
 
