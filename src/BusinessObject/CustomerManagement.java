@@ -31,27 +31,18 @@ public class CustomerManagement {
                 Customer customer = inputCustomer();
                 if (customerDAO.findCustomerById(customer.getId()) != null) {
                     System.out.println("Customer already exists!");
-                    continue;
+                    return;
                 }
                 customerDAO.addCustomer(customer);
                 customerDAO.save();
+                System.out.println("[1] Register new customer");
+                System.out.println("[2] Return menu");
+                int choice = DataInput.getIntegerMaxMin(1, 2, "Enter your choice: ");
+                if (choice == 2) {
+                    return;
+                }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                continue;
-            }
-
-            System.out.println("[1] Register new customer");
-            System.out.println("[2] Return menu");
-            int choice;
-            while (true) {
-                try {
-                    choice = DataInput.getIntegerMaxMin(1, 2, "Enter your choice: ");
-                    break;
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-            if (choice == 2) {
                 return;
             }
         }
