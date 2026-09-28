@@ -33,7 +33,7 @@ public class SetMenuDAO {
     }
 
     public void load() {
-        try (BufferedReader reader = new BufferedReader(
+        try ( BufferedReader reader = new BufferedReader(
                 new InputStreamReader(new FileInputStream(PATH), StandardCharsets.UTF_8))) {
             String line;
             reader.readLine();
@@ -84,7 +84,7 @@ public class SetMenuDAO {
     }
 
     public void save() {
-        try (BufferedWriter writer = new BufferedWriter(
+        try ( BufferedWriter writer = new BufferedWriter(
                 new OutputStreamWriter(new FileOutputStream(PATH), StandardCharsets.UTF_8))) {
             writer.write("Code,Name,Price,Ingredients");
             writer.newLine();
@@ -122,26 +122,14 @@ public class SetMenuDAO {
         return setMenus.get(id);
     }
 
-    // public ArrayList<SetMenu> findSetMenuByDish(String dish) {
-    // dish = dish.trim().toLowerCase();
-    // ArrayList<SetMenu> res = new ArrayList<>();
-    // for (SetMenu menu : getAllSetMenu()) {
-    // if (containsDish(menu, dish)) {
-    // res.add(menu);
-    // }
-    // }
-    // return res;
-    // }
-
-    // private boolean containsDish(SetMenu menu, String dish) {
-    // for (List<String> dishes : menu.getIngredients().values()) {
-    // for (String d : dishes) {
-    // if (d.toLowerCase().contains(dish)) {
-    // return true;
-    // }
-    // }
-    // }
-    // return false;
-    // }
-
+  
+    public ArrayList<SetMenu> findMenuInRange(long min, long max) {
+        ArrayList<SetMenu> res = new ArrayList<>();
+        for (SetMenu setMenu : getAllSetMenu()) {
+            if (setMenu.getPrice() <= max && setMenu.getPrice() >= min) {
+                res.add(setMenu);
+            }
+        }
+        return res;
+    }
 }

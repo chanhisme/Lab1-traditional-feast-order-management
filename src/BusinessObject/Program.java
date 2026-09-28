@@ -25,7 +25,7 @@ public class Program {
         } catch (java.io.UnsupportedEncodingException e) {
             System.out.println("Warning: UTF-8 is not supported. Vietnamese characters may display incorrectly.");
         }
-        
+
         Map<String, Customer> customers = new LinkedHashMap<>();
         CustomerDAO customerDAO = new CustomerDAO(customers);
         CustomerManagement customerManagement = new CustomerManagement(customerDAO);
@@ -48,7 +48,8 @@ public class Program {
             Menu.printMenu(
                     "1. Register customers|2. Update customer information|"
                     + "3. Search customer information by name|4. Display feast menus|5. Place a feast order|"
-                    + "6. Update order information|7. Save data to file|8. Display Customer or Order lists|Select:");
+                    + "6. Update order information|7. Save data to file|8. Display Customer or Order lists|"
+                    + "9. Filter menu by range|Select:");
 
             try {
                 choice = DataInput.getInteger("Enter your choice: ");
@@ -83,6 +84,9 @@ public class Program {
                     break;
                 case 8:
                     displayCustomerOrOrder(customerDAO, customerManagement, orderDAO, orderManagement);
+                    break;
+                case 9:
+                    setMenuManagement.findMenuInRange();
                     break;
                 default:
                     System.out.println("Good bye");

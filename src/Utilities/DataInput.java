@@ -30,6 +30,8 @@ public class DataInput {
         }
         return number;
     }
+    
+   
 
     public static String getString(String displayMessage) {
 

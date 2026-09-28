@@ -3,8 +3,10 @@ package BusinessObject;
 import DataObjects.SetMenuDAO;
 import Utilities.Constants;
 import Entities.SetMenu;
+import Utilities.DataInput;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class SetMenuManagement {
 
@@ -33,7 +35,7 @@ public class SetMenuManagement {
         System.out.println("List of Set Menus for ordering party:");
         System.out.println("-----------------------------------------------------------");
         for (SetMenu setMenu : sorted) {
-      
+
             System.out.printf("%-15s: %s\n", "Code", setMenu.getId());
             System.out.printf("%-15s: %s\n", "Name", setMenu.getName());
             System.out.printf("%-15s: %s\n", "Price", formatNumber(setMenu.getPrice()));
@@ -59,6 +61,33 @@ public class SetMenuManagement {
             }
         }
         System.out.println();
+    }
+
+    public void findMenuInRange() {
+        long min, max;
+        try {
+            min = Long.parseLong(DataInput.getString("Enter min: "));
+            max = Long.parseLong(DataInput.getString("Enter max: "));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+        if (min < 0 || max < 0) {
+            System.out.println("Cannot negative");
+            return;
+        }
+        if (min > max) {
+            System.out.println("min cannot larger than max");
+            return;
+        }
+        ArrayList<SetMenu> res = setMenuDAO.findMenuInRange(min, max);
+        if (res == null || res.isEmpty()) {
+            System.out.println("list is empty");
+            return;
+        }
+        displaySetMenu(res);
+        System.out.println("Total: " + res.size());
+
     }
 
 }
