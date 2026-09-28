@@ -26,4 +26,12 @@ public class Constants {
 
     public static final String DOMAIN_EMAIL = "^@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)+$";
 
+//    Điều kiện	Java date
+//
+//    < 28/9	date.isBefore (startDate)
+//
+//date <= 28/9	!date.isAfter(startDate)
+//date == 28/9	date.isEqual(startDate)
+//date >= 28/9	!date.isBefore(startDate)
+//date > 28/9	date.isAfter(startDate)
 }

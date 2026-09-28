@@ -67,7 +67,7 @@ public class DataInput {
         return LocalDate.parse(date, DataValidation.DATE_FORMATTER);
     }
     
-    public static int getIntegerMaxMin(int max, int min, String message) throws Exception{
+    public static int getIntegerMaxMin(int min, int max, String message) throws Exception{
         int number = getInteger(message);
         if(!DataValidation.isIntergerMaxMin(min, max, number)){
             throw new Exception("the number is invalid");
