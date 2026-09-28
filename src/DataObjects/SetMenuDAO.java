@@ -47,7 +47,7 @@ public class SetMenuDAO {
 
                 String id = data[0].trim();
                 String name = data[1].trim();
-                double price = Double.parseDouble(data[2].trim());
+                long price = Long.parseLong(data[2].trim());
                 String ingredientsData = data[3].trim();
 
                 if (ingredientsData.startsWith("\"") && ingredientsData.endsWith("\"")) {
@@ -98,7 +98,7 @@ public class SetMenuDAO {
                         + "#" + Constants.PREFIX_DESSERT + " "
                         + String.join("; ",
                                 menu.getIngredients().getOrDefault(Constants.CATEGORY_DESSERT, new ArrayList<>()));
-                writer.write(menu.getId() + "," + menu.getName() + "," + (long) menu.getPrice() + ",\"" + ingredients
+                writer.write(menu.getId() + "," + menu.getName() + "," + menu.getPrice() + ",\"" + ingredients
                         + "\"");
                 writer.newLine();
             }

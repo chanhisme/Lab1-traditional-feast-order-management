@@ -291,7 +291,7 @@ public class OrderManagement {
 
         for (Order order : orders) {
             System.out.printf(
-                    "%-4s | %-10s | %-11s | %-8s | %,14.0f | %6d | %,12d\n",
+                    "%-4s | %-10s | %-11s | %-8s | %,14d | %6d | %,12d\n",
                     order.getOrderId(),
                     order.getEventDate().format(Constants.DATE_FORMATTER),
                     order.getCustomerId(),

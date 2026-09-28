@@ -6,11 +6,11 @@ import java.util.Map;
 public class SetMenu {
     private String id;
     private String name;
-    private double price;
+    private long price;
 
     private Map<String, List<String>> ingredients;
 
-    public SetMenu(String id, String name, double price, Map<String, List<String>> ingredients) {
+    public SetMenu(String id, String name, long price, Map<String, List<String>> ingredients) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -33,11 +33,11 @@ public class SetMenu {
         this.name = name;
     }
 
-    public double getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
@@ -61,7 +61,7 @@ public class SetMenu {
 
     @Override
     public String toString() {
-        return String.format("Code: %s | Name: %s | Price: %.0f", id, name, price);
+        return String.format("Code: %s | Name: %s | Price: %d", id, name, price);
     }
 
 }

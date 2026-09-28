@@ -68,8 +68,8 @@ public class Order {
         this.numberOfTables = numberOfTables;
     }
 
-    public void setTotalCost(double uniCost) {
-        this.totalCost = (long) (uniCost * this.numberOfTables);
+    public void setTotalCost(long uniCost) {
+        this.totalCost = uniCost * this.numberOfTables;
     }
 
     public String getFormattedEventDate() {

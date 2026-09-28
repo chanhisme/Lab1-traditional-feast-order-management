@@ -15,8 +15,8 @@ public class SetMenuManagement {
         this.setMenuDAO = setMenuDAO;
     }
 
-    public static String formatNumber(double price) {
-        String number = String.valueOf((long) price);
+    public static String formatNumber(long price) {
+        String number = String.valueOf(price);
         return number.replaceAll(NUMBER_REGEX, ",");
     }
 
@@ -26,7 +26,8 @@ public class SetMenuManagement {
             return;
         }
         List<SetMenu> sorted = new ArrayList<>(setMenuList);
-        sorted.sort((menu1, menu2) -> Double.compare(menu1.getPrice(), menu2.getPrice()));
+        //sort tăng dần
+        sorted.sort((menu1, menu2) -> Long.compare(menu1.getPrice(), menu2.getPrice()));
 
         System.out.println("-----------------------------------------------------------");
         System.out.println("List of Set Menus for ordering party:");

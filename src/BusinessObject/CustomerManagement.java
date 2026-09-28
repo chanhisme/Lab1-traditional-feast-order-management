@@ -85,6 +85,8 @@ public class CustomerManagement {
         for (Customer customer : customers) {
             System.out.println(customer.toString());
         }
+//        System.out.println("Total: "+ customers.size());
+      
 
         System.out.println(line);
     }
